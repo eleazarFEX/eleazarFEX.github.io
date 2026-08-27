@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generador de Catálogo Digital</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#111827;
+    --secondary:#374151;
+    --accent:#2563eb;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --border:#e5e7eb;
+    --light:#f3f4f6;
+    --text:#111827;
+    --muted:#6b7280;
+    --white:#ffffff;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:var(--text);
+    min-height:100vh;
+}
+
+/* ==============================
+   HEADER
+============================== */
+
+header{
+    background:#111827;
+    color:white;
+    padding:16px 22px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+
+.header-inner{
+    max-width:1500px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-icon{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:white;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.brand h1{
+    font-size:20px;
+}
+
+.brand p{
+    font-size:12px;
+    opacity:.7;
+    margin-top:3px;
+}
+
+/* ==============================
+   LAYOUT
+============================== */
+
+.app{
+    max-width:1500px;
+    margin:auto;
+    padding:25px;
+    display:grid;
+    grid-template-columns:410px 1fr;
+    gap:25px;
+}
+
+.panel{
+    background:white;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 4px 20px rgba(0,0,0,.06);
+}
+
+.editor{
+    height:max-content;
+}
+
+/* ==============================
+   SECTIONS
+============================== */
+
+.section{
+    border-bottom:1px solid var(--border);
+    padding-bottom:22px;
+    margin-bottom:22px;
+}
+
+.section:last-child{
+    border-bottom:none;
+    margin-bottom:0;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+/* ==============================
+   FORM
+============================== */
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:11px 12px;
+    font-size:14px;
+    outline:none;
+    background:white;
+    margin-bottom:15px;
+    transition:.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+textarea{
+    min-height:75px;
+    resize:vertical;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* ==============================
+   UPLOAD
+============================== */
+
+.upload-box{
+    border:2px dashed #d1d5db;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+    margin-bottom:15px;
+}
+
+.upload-box:hover{
+    border-color:var(--accent);
+    background:#f8fafc;
+}
+
+.upload-box span{
+    display:block;
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.upload-box p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.upload-box input{
+    display:none;
+}
+
+.logo-preview{
+    max-width:130px;
+    max-height:80px;
+    object-fit:contain;
+    display:none;
+    margin:10px auto 18px;
+}
+
+/* ==============================
+   COLOR
+============================== */
+
+.color-container{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.color-container input[type="color"]{
+    width:60px;
+    height:42px;
+    padding:3px;
+    cursor:pointer;
+    margin:0;
+}
+
+.color-value{
+    font-size:13px;
+    color:var(--muted);
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+button{
+    border:none;
+    border-radius:9px;
+    padding:11px 15px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    width:100%;
+    background:var(--accent);
+    color:white;
+}
+
+.btn-success{
+    width:100%;
+    background:var(--success);
+    color:white;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+.btn-secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn-small{
+    padding:7px 9px;
+    font-size:12px;
+}
+
+/* ==============================
+   PRODUCTS
+============================== */
+
+.product-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.product-item{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:9px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.product-item img{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:8px;
+    background:#f3f4f6;
+}
+
+.product-info{
+    flex:1;
+    min-width:0;
+}
+
+.product-info strong{
+    font-size:13px;
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.product-info small{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.product-actions{
+    display:flex;
+    gap:5px;
+}
+
+.empty-products{
+    padding:20px;
+    text-align:center;
+    border:1px dashed var(--border);
+    border-radius:10px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* ==============================
+   PREVIEW
+============================== */
+
+.preview-area{
+    min-width:0;
+}
+
+.preview-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+}
+
+.preview-toolbar h2{
+    font-size:18px;
+}
+
+.preview-toolbar span{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.catalog-container{
+    background:#cbd5e1;
+    border-radius:14px;
+    padding:30px;
+    overflow:auto;
+}
+
+/* =================================================
+   HOJA CARTA
+   8.5 x 11 pulgadas
+================================================= */
+
+.catalog-page{
+    width:8.5in;
+    height:11in;
+
+    padding:
+        0.70in
+        0.70in
+        0.65in
+        0.70in;
+
+    margin:0 auto 25px;
+
+    background:#ffffff;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+
+    page-break-after:always;
+}
+
+/* ==============================
+   PORTADA / ENCABEZADO
+============================== */
+
+.catalog-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.catalog-logo{
+    width:auto;
+    max-width:100px;
+    max-height:60px;
+    object-fit:contain;
+    margin:0 auto 10px;
+    display:none;
+}
+
+.catalog-business{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.catalog-subtitle{
+    font-size:11px;
+    color:#666;
+    line-height:1.4;
+}
+
+.catalog-contact{
+    font-size:9px;
+    color:#777;
+    margin-top:7px;
+}
+
+/* ==============================
+   PRODUCT GRID
+============================== */
+
+.catalog-products{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    grid-template-rows:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    height:8.15in;
+}
+
+/* ==============================
+   PRODUCT CARD
+============================== */
+
+.catalog-product{
+    background:white;
+
+    border:1px solid #dedede;
+
+    border-radius:9px;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    min-width:0;
+
+    break-inside:avoid;
+}
+
+.catalog-product-image{
+    width:100%;
+
+    height:1.75in;
+
+    object-fit:cover;
+
+    display:block;
+
+    background:#f3f4f6;
+}
+
+.catalog-product-content{
+    padding:10px;
+
+    display:flex;
+    flex-direction:column;
+
+    flex:1;
+}
+
+.catalog-product-name{
+    font-size:12px;
+    font-weight:bold;
+
+    line-height:1.25;
+
+    margin-bottom:4px;
+}
+
+.catalog-product-description{
+    font-size:8.5px;
+
+    color:#666;
+
+    line-height:1.35;
+
+    min-height:25px;
+
+    margin-bottom:7px;
+}
+
+.price{
+    margin-top:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    flex-wrap:wrap;
+}
+
+.old-price{
+    font-size:8px;
+
+    color:#999;
+
+    text-decoration:line-through;
+}
+
+.current-price{
+    font-size:14px;
+
+    font-weight:bold;
+}
+
+/* ==============================
+   FOOTER
+============================== */
+
+.catalog-footer{
+    position:absolute;
+
+    left:.70in;
+    right:.70in;
+    bottom:.28in;
+
+    border-top:1px solid rgba(0,0,0,.15);
+
+    padding-top:7px;
+
+    text-align:center;
+
+    font-size:8px;
+
+    color:#666;
+}
+
+/* ==============================
+   EMPTY PAGE
+============================== */
+
+.empty-catalog{
+    grid-column:1 / -1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#888;
+
+    font-size:12px;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media(max-width:1100px){
+
+    .app{
+        grid-template-columns:350px 1fr;
+    }
+
+}
+
+@media(max-width:850px){
+
+    header{
+        position:relative;
+    }
+
+    .app{
+        grid-template-columns:1fr;
+        padding:15px;
+    }
+
+    .catalog-container{
+        padding:15px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .app{
+        padding:10px;
+    }
+
+    .panel{
+        padding:16px;
+    }
+
+    .row{
+        grid-template-columns:1fr;
+    }
+
+    .catalog-container{
+        padding:10px;
+    }
+
+    /*
+       La hoja mantiene su tamaño real.
+       Se puede desplazar horizontalmente
+       para verla completa en celular.
+    */
+
+    .catalog-page{
+        margin-left:0;
+        margin-right:20px;
+    }
+
+}
+
+/* =================================================
+   IMPRESIÓN / PDF
+================================================= */
+
+@media print{
+
+    *{
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+    }
+
+    @page{
+        size:letter;
+        margin:0;
+    }
+
+    html,
+    body{
+        width:8.5in;
+        margin:0;
+        padding:0;
+        background:white;
+    }
+
+    header,
+    .editor,
+    .preview-toolbar{
+        display:none !important;
+    }
+
+    .app{
+        display:block;
+        padding:0;
+        margin:0;
+        width:auto;
+    }
+
+    .panel{
+        padding:0;
+        margin:0;
+        box-shadow:none;
+        border-radius:0;
+    }
+
+    .catalog-container{
+        padding:0;
+        margin:0;
+        background:none;
+        overflow:visible;
+    }
+
+    .catalog-page{
+        width:8.5in;
+        height:11in;
+
+        margin:0;
+
+        box-shadow:none;
+
+        page-break-after:always;
+
+        overflow:hidden;
+    }
+
+    .catalog-page:last-child{
+        page-break-after:auto;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                F
+            </div>
+
+            <div>
+                <h1>Generador de Catálogo</h1>
+
+                <p>
+                    Crea tu catálogo 
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="app">
+
+
+<!-- ==================================================
+     EDITOR
+================================================== -->
+
+<section class="panel editor">
+
+
+<!-- DATOS DEL NEGOCIO -->
+
+<div class="section">
+
+    <div class="section-title">
+        🏪 Datos del negocio
+    </div>
+
+
+    <label>
+        Logotipo
+    </label>
+
+    <label class="upload-box">
+
+        <span>📷</span>
+
+        <p>
+            Haz clic para seleccionar tu logotipo
+        </p>
+
+        <input
+            type="file"
+            id="logoInput"
+            accept="image/*"
+        >
+
+    </label>
+
+
+    <img
+        id="logoPreview"
+        class="logo-preview"
+        alt="Logo"
+    >
+
+
+    <label>
+        Nombre del negocio
+    </label>
+
+    <input
+        id="businessName"
+        type="text"
+        placeholder="Ej. Tienda 3B"
+    >
+
+
+    <label>
+        WhatsApp
+    </label>
+
+    <input
+        id="whatsapp"
+        type="text"
+        placeholder="Ej. 5512345678"
+    >
+
+
+    <label>
+        Red Social o Web
+    </label>
+
+    <input
+        id="instagram"
+        type="text"
+        placeholder="www.mitienda.com"
+    >
+
+
+    <label>
+        Texto del catálogo
+    </label>
+
+    <textarea
+        id="catalogDescription"
+        placeholder="Ej. Nueva colección 2026"
+    ></textarea>
+
+
+    <!-- COLOR -->
+
+    <label>
+        Color de fondo del catálogo
+    </label>
+
+    <div class="color-container">
+
+        <input
+            type="color"
+            id="backgroundColor"
+            value="#ffffff"
+        >
+
+        <span
+            class="color-value"
+            id="colorValue"
+        >
+            #FFFFFF
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- AGREGAR PRODUCTO -->
+
+<div class="section">
+
+    <div class="section-title">
+        ➕ Agregar producto
+    </div>
+
+
+    <label>
+        Imagen del producto
+    </label>
+
+    <label class="upload-box">
+
+        <span>🖼️</span>
+
+        <p>
+            Selecciona una imagen
+        </p>
+
+        <input
+            type="file"
+            id="productImage"
+            accept="image/*"
+        >
+
+    </label>
+
+
+    <label>
+        Nombre del producto
+    </label>
+
+    <input
+        id="productName"
+        type="text"
+        placeholder="Ej. Chamarra Blanca"
+    >
+
+
+    <label>
+        Descripción breve
+    </label>
+
+    <textarea
+        id="productDescription"
+        placeholder="Ej. Chamarra ligera y cómoda"
+    ></textarea>
+
+
+    <label>
+        Precio actual
+    </label>
+
+    <input
+        id="productPrice"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="599"
+    >
+
+
+    <div
+        style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            background:#f8fafc;
+            padding:11px;
+            border-radius:9px;
+            margin-bottom:15px;
+        "
+    >
+
+        <input
+            type="checkbox"
+            id="hasDiscount"
+            style="width:auto;margin:0;"
+        >
+
+        <label
+            for="hasDiscount"
+            style="margin:0;"
+        >
+            Este producto tiene descuento
+        </label>
+
+    </div>
+
+
+    <div
+        id="oldPriceContainer"
+        style="display:none;"
+    >
+
+        <label>
+            Precio anterior
+        </label>
+
+        <input
+            id="oldPrice"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="799"
+        >
+
+    </div>
+
+
+    <button
+        id="addProductBtn"
+        class="btn-primary"
+    >
+        ➕ Agregar producto
+    </button>
+
+</div>
+
+
+<!-- PRODUCTOS -->
+
+<div class="section">
+
+    <div class="section-title">
+        📦 Productos agregados
+    </div>
+
+
+    <div
+        id="productList"
+        class="product-list"
+    >
+
+        <div class="empty-products">
+            No has agregado productos todavía.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ACCIONES -->
+
+<div>
+
+    <div class="section-title">
+        ⚙️ Acciones
+    </div>
+
+
+    <button
+        class="btn-success"
+        onclick="window.print()"
+    >
+        📄 Exportar catálogo en PDF
+    </button>
+
+
+    <button
+        class="btn-danger"
+        id="clearBtn"
+        style="width:100%;margin-top:10px;"
+    >
+        🗑️ Borrar todo
+    </button>
+
+</div>
+
+
+</section>
+
+
+<!-- ==================================================
+     VISTA PREVIA
+================================================== -->
+
+<section class="panel preview-area">
+
+    <div class="preview-toolbar">
+
+        <h2>
+            👁️ Vista previa del catálogo
+        </h2>
+
+        <span>
+            9 productos por página
+        </span>
+
+    </div>
+
+
+    <div
+        class="catalog-container"
+        id="catalogContainer"
+    >
+
+        <!-- Las páginas se generan con JavaScript -->
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+/* ======================================================
+   VARIABLES
+====================================================== */
+
+let products = [];
+
+let logoData = null;
+
+let currentProductImage = null;
+
+let editingIndex = null;
+
+
+/* ======================================================
+   ELEMENTOS
+====================================================== */
+
+const logoInput =
+    document.getElementById("logoInput");
+
+const logoPreview =
+    document.getElementById("logoPreview");
+
+const businessName =
+    document.getElementById("businessName");
+
+const whatsapp =
+    document.getElementById("whatsapp");
+
+const instagram =
+    document.getElementById("instagram");
+
+const catalogDescription =
+    document.getElementById("catalogDescription");
+
+const backgroundColor =
+    document.getElementById("backgroundColor");
+
+const colorValue =
+    document.getElementById("colorValue");
+
+const productImage =
+    document.getElementById("productImage");
+
+const productName =
+    document.getElementById("productName");
+
+const productDescription =
+    document.getElementById("productDescription");
+
+const productPrice =
+    document.getElementById("productPrice");
+
+const hasDiscount =
+    document.getElementById("hasDiscount");
+
+const oldPrice =
+    document.getElementById("oldPrice");
+
+const oldPriceContainer =
+    document.getElementById("oldPriceContainer");
+
+const addProductBtn =
+    document.getElementById("addProductBtn");
+
+const productList =
+    document.getElementById("productList");
+
+const catalogContainer =
+    document.getElementById("catalogContainer");
+
+
+/* ======================================================
+   CONVERTIR IMAGEN A DATA URL
+   ESTO SOLUCIONA EL PROBLEMA DEL PDF
+====================================================== */
+
+function imageToDataURL(file, maxSize = 1200){
+
+    return new Promise((resolve,reject)=>{
+
+        const reader = new FileReader();
+
+        reader.onload = function(){
+
+            const img = new Image();
+
+            img.onload = function(){
+
+                let width = img.width;
+
+                let height = img.height;
+
+
+                /*
+                    Reducimos imágenes demasiado grandes
+                    para evitar consumir demasiada memoria.
+                */
+
+                if(width > maxSize || height > maxSize){
+
+                    if(width > height){
+
+                        height =
+                            height * maxSize / width;
+
+                        width = maxSize;
+
+                    }else{
+
+                        width =
+                            width * maxSize / height;
+
+                        height = maxSize;
+
+                    }
+
+                }
+
+
+                const canvas =
+                    document.createElement("canvas");
+
+                canvas.width = width;
+
+                canvas.height = height;
+
+
+                const ctx =
+                    canvas.getContext("2d");
+
+
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+                /*
+                    JPEG comprimido.
+                    Esto hace que el catálogo
+                    consuma menos memoria.
+                */
+
+                const dataURL =
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.88
+                    );
+
+
+                resolve(dataURL);
+
+            };
+
+
+            img.onerror = reject;
+
+            img.src = reader.result;
+
+        };
+
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* ======================================================
+   LOGO
+====================================================== */
+
+logoInput.addEventListener(
+    "change",
+    async function(){
+
+        const file = this.files[0];
+
+        if(!file) return;
+
+
+        try{
+
+            logoData =
+                await imageToDataURL(
+                    file,
+                    1000
+                );
+
+
+            logoPreview.src =
+                logoData;
+
+            logoPreview.style.display =
+                "block";
+
+
+            updateCatalog();
+
+        }catch(error){
+
+            alert(
+                "No se pudo cargar el logotipo."
+            );
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   IMAGEN DEL PRODUCTO
+====================================================== */
+
+productImage.addEventListener(
+    "change",
+    async function(){
+
+        const file = this.files[0];
+
+        if(!file) return;
+
+
+        try{
+
+            currentProductImage =
+                await imageToDataURL(
+                    file,
+                    1200
+                );
+
+        }catch(error){
+
+            alert(
+                "No se pudo cargar la imagen."
+            );
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   COLOR
+====================================================== */
+
+backgroundColor.addEventListener(
+    "input",
+    function(){
+
+        colorValue.textContent =
+            this.value.toUpperCase();
+
+        updateCatalog();
+
+    }
+);
+
+
+/* ======================================================
+   DESCUENTO
+====================================================== */
+
+hasDiscount.addEventListener(
+    "change",
+    function(){
+
+        if(this.checked){
+
+            oldPriceContainer.style.display =
+                "block";
+
+        }else{
+
+            oldPriceContainer.style.display =
+                "none";
+
+            oldPrice.value = "";
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   DATOS EN TIEMPO REAL
+====================================================== */
+
+[
+    businessName,
+    whatsapp,
+    instagram,
+    catalogDescription
+].forEach(input=>{
+
+    input.addEventListener(
+        "input",
+        updateCatalog
+    );
+
+});
+
+
+/* ======================================================
+   AGREGAR PRODUCTO
+====================================================== */
+
+addProductBtn.addEventListener(
+    "click",
+    async function(){
+
+        const name =
+            productName.value.trim();
+
+        const description =
+            productDescription.value.trim();
+
+        const price =
+            parseFloat(
+                productPrice.value
+            );
+
+        const previousPrice =
+            parseFloat(
+                oldPrice.value
+            );
+
+
+        if(!name){
+
+            alert(
+                "Escribe el nombre del producto."
+            );
+
+            return;
+
+        }
+
+
+        if(!currentProductImage &&
+           editingIndex === null){
+
+            alert(
+                "Selecciona una imagen."
+            );
+
+            return;
+
+        }
+
+
+        if(isNaN(price)){
+
+            alert(
+                "Escribe un precio válido."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            hasDiscount.checked &&
+            (
+                isNaN(previousPrice) ||
+                previousPrice <= price
+            )
+        ){
+
+            alert(
+                "El precio anterior debe ser mayor al precio actual."
+            );
+
+            return;
+
+        }
+
+
+        const product = {
+
+            name:name,
+
+            description:description,
+
+            price:price,
+
+            hasDiscount:
+                hasDiscount.checked,
+
+            oldPrice:
+                hasDiscount.checked
+                    ? previousPrice
+                    : null,
+
+            image:
+                currentProductImage
+
+        };
+
+
+        if(editingIndex !== null){
+
+            /*
+                Si no seleccionó otra imagen,
+                conservar la imagen anterior.
+            */
+
+            if(!currentProductImage){
+
+                product.image =
+                    products[
+                        editingIndex
+                    ].image;
+
+            }
+
+
+            products[
+                editingIndex
+            ] = product;
+
+
+            editingIndex = null;
+
+            addProductBtn.textContent =
+                "➕ Agregar producto";
+
+        }else{
+
+            products.push(product);
+
+        }
+
+
+        clearProductForm();
+
+        renderProductList();
+
+        updateCatalog();
+
+    }
+);
+
+
+/* ======================================================
+   LIMPIAR FORMULARIO
+====================================================== */
+
+function clearProductForm(){
+
+    productName.value = "";
+
+    productDescription.value = "";
+
+    productPrice.value = "";
+
+    oldPrice.value = "";
+
+    hasDiscount.checked = false;
+
+    oldPriceContainer.style.display =
+        "none";
+
+    productImage.value = "";
+
+    currentProductImage = null;
+
+}
+
+
+/* ======================================================
+   LISTA DE PRODUCTOS
+====================================================== */
+
+function renderProductList(){
+
+    if(products.length === 0){
+
+        productList.innerHTML = `
+
+            <div class="empty-products">
+                No has agregado productos todavía.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    productList.innerHTML = "";
+
+
+    products.forEach(
+        (product,index)=>{
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "product-item";
+
+
+            item.innerHTML = `
+
+                <img
+                    src="${product.image}"
+                    alt=""
+                >
+
+                <div class="product-info">
+
+                    <strong>
+                        ${escapeHTML(product.name)}
+                    </strong>
+
+                    <small>
+                        $${formatPrice(product.price)}
+                    </small>
+
+                </div>
+
+                <div class="product-actions">
+
+                    <button
+                        class="btn-secondary btn-small"
+                        onclick="editProduct(${index})"
+                    >
+                        ✏️
+                    </button>
+
+                    <button
+                        class="btn-danger btn-small"
+                        onclick="deleteProduct(${index})"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+            `;
+
+
+            productList.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* ======================================================
+   EDITAR
+====================================================== */
+
+window.editProduct =
+function(index){
+
+    const product =
+        products[index];
+
+
+    productName.value =
+        product.name;
+
+    productDescription.value =
+        product.description;
+
+    productPrice.value =
+        product.price;
+
+
+    hasDiscount.checked =
+        product.hasDiscount;
+
+
+    if(product.hasDiscount){
+
+        oldPriceContainer.style.display =
+            "block";
+
+        oldPrice.value =
+            product.oldPrice;
+
+    }else{
+
+        oldPriceContainer.style.display =
+            "none";
+
+    }
+
+
+    /*
+        No cargamos la imagen al input.
+        El navegador no permite establecer
+        programáticamente un archivo.
+    */
+
+    currentProductImage = null;
+
+    productImage.value = "";
+
+    editingIndex = index;
+
+
+    addProductBtn.textContent =
+        "💾 Guardar cambios";
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+};
+
+
+/* ======================================================
+   ELIMINAR
+====================================================== */
+
+window.deleteProduct =
+function(index){
+
+    if(
+        !confirm(
+            "¿Eliminar este producto?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    products.splice(
+        index,
+        1
+    );
+
+
+    renderProductList();
+
+    updateCatalog();
+
+};
+
+
+/* ======================================================
+   CREAR PÁGINA
+====================================================== */
+
+function createCatalogPage(
+    pageProducts,
+    pageNumber
+){
+
+    const page =
+        document.createElement(
+            "div"
+        );
+
+    page.className =
+        "catalog-page";
+
+
+    page.style.backgroundColor =
+        backgroundColor.value;
+
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    const header =
+        document.createElement(
+            "div"
+        );
+
+    header.className =
+        "catalog-header";
+
+
+    if(logoData){
+
+        const logo =
+            document.createElement(
+                "img"
+            );
+
+        logo.className =
+            "catalog-logo";
+
+        logo.src =
+            logoData;
+
+        logo.style.display =
+            "block";
+
+        header.appendChild(logo);
+
+    }
+
+
+    const title =
+        document.createElement(
+            "div"
+        );
+
+    title.className =
+        "catalog-business";
+
+    title.textContent =
+        businessName.value.trim()
+        || "Mi negocio";
+
+
+    header.appendChild(title);
+
+
+    const subtitle =
+        document.createElement(
+            "div"
+        );
+
+    subtitle.className =
+        "catalog-subtitle";
+
+    subtitle.textContent =
+        catalogDescription.value.trim()
+        || "Catálogo de productos";
+
+
+    header.appendChild(subtitle);
+
+
+    let contactText = "";
+
+
+    if(whatsapp.value.trim()){
+
+        contactText +=
+            "WhatsApp: " +
+            whatsapp.value.trim();
+
+    }
+
+
+    if(instagram.value.trim()){
+
+        if(contactText){
+
+            contactText +=
+                "  •  ";
+
+        }
+
+        contactText +=
+            "Instagram: " +
+            instagram.value.trim();
+
+    }
+
+
+    if(contactText){
+
+        const contact =
+            document.createElement(
+                "div"
+            );
+
+        contact.className =
+            "catalog-contact";
+
+        contact.textContent =
+            contactText;
+
+        header.appendChild(
+            contact
+        );
+
+    }
+
+
+    page.appendChild(header);
+
+
+    /* =========================
+       PRODUCTOS
+    ========================== */
+
+    const grid =
+        document.createElement(
+            "div"
+        );
+
+    grid.className =
+        "catalog-products";
+
+
+    pageProducts.forEach(
+        product=>{
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "catalog-product";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+            image.className =
+                "catalog-product-image";
+
+            image.src =
+                product.image;
+
+            image.alt =
+                product.name;
+
+
+            card.appendChild(
+                image
+            );
+
+
+            const content =
+                document.createElement(
+                    "div"
+                );
+
+            content.className =
+                "catalog-product-content";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+            name.className =
+                "catalog-product-name";
+
+            name.textContent =
+                product.name;
+
+
+            content.appendChild(
+                name
+            );
+
+
+            const description =
+                document.createElement(
+                    "div"
+                );
+
+            description.className =
+                "catalog-product-description";
+
+            description.textContent =
+                product.description;
+
+
+            content.appendChild(
+                description
+            );
+
+
+            const price =
+                document.createElement(
+                    "div"
+                );
+
+            price.className =
+                "price";
+
+
+            if(
+                product.hasDiscount &&
+                product.oldPrice
+            ){
+
+                const old =
+                    document.createElement(
+                        "span"
+                    );
+
+                old.className =
+                    "old-price";
+
+                old.textContent =
+                    "$" +
+                    formatPrice(
+                        product.oldPrice
+                    );
+
+
+                const current =
+                    document.createElement(
+                        "span"
+                    );
+
+                current.className =
+                    "current-price";
+
+                current.textContent =
+                    "$" +
+                    formatPrice(
+                        product.price
+                    );
+
+
+                price.appendChild(old);
+
+                price.appendChild(current);
+
+            }else{
+
+                const current =
+                    document.createElement(
+                        "span"
+                    );
+
+                current.className =
+                    "current-price";
+
+                current.textContent =
+                    "$" +
+                    formatPrice(
+                        product.price
+                    );
+
+
+                price.appendChild(
+                    current
+                );
+
+            }
+
+
+            content.appendChild(
+                price
+            );
+
+
+            card.appendChild(
+                content
+            );
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    /*
+        Si la última página tiene
+        menos de 9 productos,
+        los espacios quedan vacíos.
+    */
+
+    if(
+        pageProducts.length === 0
+    ){
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "empty-catalog";
+
+        empty.textContent =
+            "Agrega productos para comenzar.";
+
+        grid.appendChild(
+            empty
+        );
+
+    }
+
+
+    page.appendChild(
+        grid
+    );
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    const footer =
+        document.createElement(
+            "div"
+        );
+
+    footer.className =
+        "catalog-footer";
+
+
+    let footerText =
+        businessName.value.trim()
+        || "Mi negocio";
+
+
+    if(whatsapp.value.trim()){
+
+        footerText +=
+            " • " +
+            whatsapp.value.trim();
+
+    }
+
+
+    if(products.length > 9){
+
+        footerText +=
+            " • Página " +
+            pageNumber;
+
+    }
+
+
+    footer.textContent =
+        footerText;
+
+
+    page.appendChild(
+        footer
+    );
+
+
+    return page;
+
+}
+
+
+/* ======================================================
+   ACTUALIZAR TODO EL CATÁLOGO
+====================================================== */
+
+function updateCatalog(){
+
+    catalogContainer.innerHTML = "";
+
+
+    /*
+        Si no hay productos,
+        crear una página vacía.
+    */
+
+    if(products.length === 0){
+
+        const page =
+            createCatalogPage(
+                [],
+                1
+            );
+
+        catalogContainer.appendChild(
+            page
+        );
+
+        return;
+
+    }
+
+
+    /*
+        9 productos por página.
+    */
+
+    const productsPerPage = 9;
+
+
+    const totalPages =
+        Math.ceil(
+            products.length /
+            productsPerPage
+        );
+
+
+    for(
+        let pageNumber = 1;
+        pageNumber <= totalPages;
+        pageNumber++
+    ){
+
+        const start =
+            (pageNumber - 1) *
+            productsPerPage;
+
+
+        const pageProducts =
+            products.slice(
+                start,
+                start + productsPerPage
+            );
+
+
+        const page =
+            createCatalogPage(
+                pageProducts,
+                pageNumber
+            );
+
+
+        catalogContainer.appendChild(
+            page
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   PRECIO
+====================================================== */
+
+function formatPrice(value){
+
+    return Number(value)
+        .toLocaleString(
+            "es-MX",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* ======================================================
+   SEGURIDAD
+====================================================== */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ======================================================
+   BORRAR TODO
+====================================================== */
+
+document.getElementById(
+    "clearBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        if(
+            !confirm(
+                "¿Seguro que quieres borrar todo el catálogo?"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        products = [];
+
+        logoData = null;
+
+        currentProductImage = null;
+
+        editingIndex = null;
+
+
+        logoInput.value = "";
+
+        logoPreview.src = "";
+
+        logoPreview.style.display =
+            "none";
+
+
+        businessName.value = "";
+
+        whatsapp.value = "";
+
+        instagram.value = "";
+
+        catalogDescription.value = "";
+
+        backgroundColor.value =
+            "#ffffff";
+
+        colorValue.textContent =
+            "#FFFFFF";
+
+
+        clearProductForm();
+
+        renderProductList();
+
+        updateCatalog();
+
+
+        addProductBtn.textContent =
+            "➕ Agregar producto";
+
+    }
+);
+
+
+/* ======================================================
+   INICIAR
+====================================================== */
+
+renderProductList();
+
+updateCatalog();
+
+</script>
+
+</body>
+</html>
