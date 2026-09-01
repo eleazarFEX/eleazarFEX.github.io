@@ -1,0 +1,3999 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Marca de Agua | Eleazar FEX</title>
+
+    <meta
+        name="description"
+        content="Herramienta gratuita de Eleazar FEX para agregar marcas de agua a tus fotografías y generar PDF."
+    >
+
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- =========================================================
+         FUENTES
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================================================
+         LIBRERÍAS
+    ========================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
+    </script>
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                "Poppins",
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc 0%,
+                    #eef2ff 50%,
+                    #f8fafc 100%
+                );
+
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           VARIABLES
+        ========================================================== */
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --whatsapp: #25d366;
+
+            --dark: #0f172a;
+            --dark-2: #1e293b;
+
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+
+            --border: #e2e8f0;
+            --background: #f8fafc;
+            --white: #ffffff;
+
+            --radius: 18px;
+
+            --shadow:
+                0 10px 35px rgba(15, 23, 42, .08);
+        }
+
+        /* =========================================================
+           CONTENEDOR
+        ========================================================== */
+
+        .app {
+            width: min(1500px, 100%);
+            margin: auto;
+
+            padding:
+                clamp(10px, 2vw, 25px);
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================== */
+
+        .header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e293b
+                );
+
+            color: white;
+
+            border-radius:
+                clamp(14px, 2vw, 24px);
+
+            padding:
+                clamp(16px, 3vw, 30px);
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 15px 45px rgba(15, 23, 42, .16);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            right: -120px;
+            top: -160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(37, 99, 235, .18);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: clamp(48px, 6vw, 65px);
+            height: clamp(48px, 6vw, 65px);
+
+            flex: 0 0 auto;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #e2e8f0
+                );
+
+            color: #0f172a;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size:
+                clamp(20px, 3vw, 30px);
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,.18);
+        }
+
+        .brand-text h1 {
+            font-size:
+                clamp(20px, 3vw, 30px);
+
+            line-height: 1.1;
+
+            margin-bottom: 5px;
+
+            font-weight: 800;
+
+            letter-spacing: -.5px;
+        }
+
+        .brand-text p {
+            color: #cbd5e1;
+
+            font-size:
+                clamp(12px, 1.5vw, 14px);
+
+            line-height: 1.4;
+
+            font-weight: 400;
+        }
+
+        .counter {
+            position: relative;
+            z-index: 1;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            padding: 10px 15px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+
+            font-weight: 500;
+        }
+
+        /* =========================================================
+           WHATSAPP HEADER
+        ========================================================== */
+
+        .whatsapp-header {
+            position: relative;
+            z-index: 2;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            background:
+                var(--whatsapp);
+
+            color: white;
+
+            text-decoration: none;
+
+            padding:
+                11px 16px;
+
+            border-radius: 11px;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            transition: .2s;
+
+            white-space: nowrap;
+        }
+
+        .whatsapp-header:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(37,211,102,.25);
+        }
+
+        /* =========================================================
+           LAYOUT
+        ========================================================== */
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(270px, 350px)
+                minmax(0, 1fr);
+
+            gap: 20px;
+
+            align-items: start;
+        }
+
+        .panel {
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            box-shadow:
+                var(--shadow);
+
+            min-width: 0;
+        }
+
+        /* =========================================================
+           SETTINGS
+        ========================================================== */
+
+        .settings {
+            padding:
+                clamp(15px, 2vw, 22px);
+
+            position: sticky;
+
+            top: 15px;
+        }
+
+        .section-title {
+            font-size: 16px;
+
+            font-weight: 800;
+
+            margin-bottom: 15px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            letter-spacing: -.2px;
+        }
+
+        .upload-area {
+            border:
+                2px dashed #94a3b8;
+
+            border-radius: 15px;
+
+            padding:
+                clamp(20px, 3vw, 30px)
+                15px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            background:
+                #f8fafc;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color:
+                var(--primary);
+
+            background:
+                #eff6ff;
+        }
+
+        .upload-icon {
+            font-size: 38px;
+
+            margin-bottom: 9px;
+        }
+
+        .upload-area strong {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-weight: 700;
+        }
+
+        .upload-area small {
+            color: var(--gray);
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            font-weight: 400;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* =========================================================
+           CONTROLES
+        ========================================================== */
+
+        .control {
+            margin-bottom: 16px;
+        }
+
+        .control label {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+        .value {
+            color:
+                var(--primary);
+
+            white-space: nowrap;
+
+            font-weight: 700;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+
+            height: 43px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding:
+                0 12px;
+
+            background:
+                white;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+
+            color: #0f172a;
+
+            transition: .2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,.1);
+        }
+
+        input[type="range"] {
+            width: 100%;
+
+            accent-color:
+                var(--primary);
+
+            cursor: pointer;
+        }
+
+        input[type="color"] {
+            width: 100%;
+
+            height: 43px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            padding: 4px;
+
+            background: white;
+
+            cursor: pointer;
+        }
+
+        .two-columns {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .separator {
+            height: 1px;
+
+            background:
+                var(--border);
+
+            margin:
+                20px 0;
+        }
+
+        /* =========================================================
+           BOTONES
+        ========================================================== */
+
+        .button-group {
+            display: grid;
+
+            gap: 9px;
+        }
+
+        .btn {
+            width: 100%;
+
+            min-height: 44px;
+
+            padding:
+                10px 14px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            font-family: inherit;
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            transition: .2s;
+        }
+
+        .btn:hover {
+            transform:
+                translateY(-1px);
+        }
+
+        .btn:active {
+            transform:
+                translateY(0);
+        }
+
+        .btn-primary {
+            background:
+                var(--primary);
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background:
+                var(--primary-dark);
+        }
+
+        .btn-success {
+            background:
+                var(--success);
+
+            color: white;
+        }
+
+        .btn-dark {
+            background:
+                var(--dark);
+
+            color: white;
+        }
+
+        .btn-light {
+            background:
+                #f1f5f9;
+
+            color:
+                #0f172a;
+
+            border:
+                1px solid var(--border);
+        }
+
+        .btn-danger {
+            background:
+                #fee2e2;
+
+            color:
+                #991b1b;
+
+            border:
+                1px solid #fecaca;
+        }
+
+        /* =========================================================
+           WHATSAPP ASESORÍA
+        ========================================================== */
+
+        .whatsapp-box {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ecfdf5,
+                    #f0fdf4
+                );
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+        .whatsapp-box-title {
+            font-weight: 800;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+
+            color:
+                #166534;
+        }
+
+        .whatsapp-box-text {
+            font-size: 12px;
+
+            color:
+                #166534;
+
+            line-height: 1.5;
+
+            margin-bottom: 12px;
+        }
+
+        .whatsapp-button {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            width: 100%;
+
+            padding: 11px;
+
+            border-radius: 9px;
+
+            background:
+                var(--whatsapp);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .whatsapp-button:hover {
+            filter:
+                brightness(.95);
+
+            transform:
+                translateY(-1px);
+        }
+
+        /* =========================================================
+           CONTENT
+        ========================================================== */
+
+        .content {
+            overflow: hidden;
+        }
+
+        .content-header {
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .content-header h2 {
+            font-size: 17px;
+
+            margin-bottom: 3px;
+
+            font-weight: 800;
+        }
+
+        .content-header span {
+            color:
+                var(--gray);
+
+            font-size: 11px;
+
+            font-weight: 400;
+        }
+
+        .photos-grid {
+            padding:
+                clamp(12px, 2vw, 20px);
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(
+                        min(100%, 220px),
+                        1fr
+                    )
+                );
+
+            gap:
+                clamp(12px, 2vw, 18px);
+        }
+
+        .empty {
+            min-height: 430px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            color:
+                #94a3b8;
+
+            padding: 40px;
+
+            grid-column:
+                1 / -1;
+        }
+
+        .empty-icon {
+            font-size: 60px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            color:
+                #64748b;
+
+            margin-bottom: 8px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+        }
+
+        .empty p {
+            font-size: 12px;
+
+            max-width: 430px;
+
+            line-height: 1.6;
+
+            font-weight: 400;
+        }
+
+        /* =========================================================
+           FOTO CARD
+        ========================================================== */
+
+        .photo-card {
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            overflow: hidden;
+
+            background: white;
+
+            box-shadow:
+                0 4px 15px
+                rgba(15,23,42,.06);
+
+            min-width: 0;
+        }
+
+        .photo-preview {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #e5e7eb 25%,
+                    transparent 25%
+                ),
+                linear-gradient(
+                    -45deg,
+                    #e5e7eb 25%,
+                    transparent 25%
+                ),
+                linear-gradient(
+                    45deg,
+                    transparent 75%,
+                    #e5e7eb 75%
+                ),
+                linear-gradient(
+                    -45deg,
+                    transparent 75%,
+                    #e5e7eb 75%
+                );
+
+            background-size:
+                20px 20px;
+
+            background-position:
+                0 0,
+                0 10px,
+                10px -10px,
+                -10px 0;
+
+            min-height: 180px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        .photo-preview img {
+            display: block;
+
+            width: 100%;
+
+            height: auto;
+
+            max-height: 330px;
+
+            object-fit: contain;
+        }
+
+        .photo-info {
+            padding:
+                10px 12px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+        .photo-name {
+            font-size: 11px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            margin-bottom: 4px;
+        }
+
+        .photo-size {
+            font-size: 10px;
+
+            color:
+                var(--gray);
+
+            font-weight: 400;
+        }
+
+        .photo-actions {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 7px;
+
+            padding:
+                0 12px 12px;
+        }
+
+        .small-btn {
+            min-height: 35px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           STATUS
+        ========================================================== */
+
+        .status {
+            margin:
+                15px 20px 0;
+
+            padding:
+                12px 14px;
+
+            border-radius: 10px;
+
+            display: none;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.info {
+            background:
+                #eff6ff;
+
+            color:
+                #1e40af;
+
+            border:
+                1px solid #bfdbfe;
+        }
+
+        .status.success {
+            background:
+                #f0fdf4;
+
+            color:
+                #166534;
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+        .status.error {
+            background:
+                #fef2f2;
+
+            color:
+                #991b1b;
+
+            border:
+                1px solid #fecaca;
+        }
+
+        /* =========================================================
+           LOADING
+        ========================================================== */
+
+        .loading {
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(15,23,42,.72);
+
+            backdrop-filter:
+                blur(5px);
+
+            z-index: 9999;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: flex;
+        }
+
+        .loading-box {
+            background:
+                white;
+
+            border-radius:
+                17px;
+
+            padding:
+                28px;
+
+            width:
+                min(100%, 420px);
+
+            text-align:
+                center;
+
+            box-shadow:
+                0 25px 60px
+                rgba(0,0,0,.25);
+        }
+
+        .spinner {
+            width: 46px;
+            height: 46px;
+
+            border:
+                4px solid #e2e8f0;
+
+            border-top-color:
+                var(--primary);
+
+            border-radius: 50%;
+
+            animation:
+                spin .8s linear infinite;
+
+            margin:
+                0 auto 16px;
+        }
+
+        @keyframes spin {
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+        .progress {
+            margin-top: 16px;
+
+            height: 8px;
+
+            background:
+                #e2e8f0;
+
+            border-radius: 99px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+
+            width: 0;
+
+            background:
+                var(--primary);
+
+            transition:
+                width .2s;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================== */
+
+        .footer {
+            margin-top: 20px;
+
+            background:
+                #0f172a;
+
+            color:
+                #cbd5e1;
+
+            border-radius:
+                18px;
+
+            padding:
+                28px 20px;
+
+            text-align:
+                center;
+        }
+
+        .footer-title {
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            margin-bottom: 7px;
+        }
+
+        .footer-description {
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            max-width: 600px;
+
+            margin:
+                0 auto 18px;
+
+            font-weight: 400;
+        }
+
+        .social-links {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+        }
+
+        .social-link {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            padding:
+                10px 13px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            text-decoration: none;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+        .social-link:hover {
+            background:
+                rgba(255,255,255,.15);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .footer-copy {
+            margin-top: 20px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.1);
+
+            font-size: 10px;
+
+            color:
+                #94a3b8;
+        }
+
+        /* =========================================================
+           RESPONSIVE TABLET
+        ========================================================== */
+
+        @media (max-width: 1050px) {
+
+            .main-grid {
+                grid-template-columns:
+                    300px minmax(0, 1fr);
+            }
+
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 850px) {
+
+            .main-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .settings {
+                position: static;
+            }
+
+            .header {
+                flex-wrap: wrap;
+            }
+
+            .counter {
+                margin-left: auto;
+            }
+
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================== */
+
+        @media (max-width: 600px) {
+
+            .app {
+                padding:
+                    8px;
+            }
+
+            .header {
+                border-radius:
+                    14px;
+
+                margin-bottom:
+                    12px;
+            }
+
+            .brand {
+                width: 100%;
+            }
+
+            .counter {
+                display: none;
+            }
+
+            .whatsapp-header {
+                width: 100%;
+            }
+
+            .panel {
+                border-radius:
+                    14px;
+            }
+
+            .settings {
+                padding:
+                    14px;
+            }
+
+            .content-header {
+                padding:
+                    15px;
+            }
+
+            .content-header h2 {
+                font-size:
+                    16px;
+            }
+
+            .photos-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+
+                padding:
+                    10px;
+
+                gap:
+                    10px;
+            }
+
+            .photo-preview {
+                min-height:
+                    120px;
+            }
+
+            .photo-preview img {
+                max-height:
+                    220px;
+            }
+
+            .photo-info {
+                padding:
+                    8px;
+            }
+
+            .photo-actions {
+                padding:
+                    0 8px 8px;
+
+                gap:
+                    5px;
+            }
+
+            .small-btn {
+                font-size:
+                    10px;
+            }
+
+            .empty {
+                min-height:
+                    350px;
+            }
+
+            .social-links {
+                display: grid;
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .social-link:last-child {
+                grid-column:
+                    1 / -1;
+            }
+
+        }
+
+        /* =========================================================
+           MOBILE MUY PEQUEÑO
+        ========================================================== */
+
+        @media (max-width: 380px) {
+
+            .photos-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .two-columns {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .social-links {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .social-link:last-child {
+                grid-column:
+                    auto;
+            }
+
+        }
+
+        /* =========================================================
+           PRINT
+        ========================================================== */
+
+        @media print {
+
+            body {
+                background:
+                    white;
+            }
+
+            .header,
+            .settings,
+            .content-header,
+            .photo-actions,
+            .status,
+            .footer {
+                display:
+                    none !important;
+            }
+
+            .app {
+                max-width:
+                    none;
+
+                padding:
+                    0;
+            }
+
+            .main-grid {
+                display:
+                    block;
+            }
+
+            .panel {
+                border:
+                    none;
+
+                box-shadow:
+                    none;
+            }
+
+            .photos-grid {
+                display:
+                    block;
+
+                padding:
+                    0;
+            }
+
+            .photo-card {
+                page-break-after:
+                    always;
+
+                border:
+                    none;
+
+                box-shadow:
+                    none;
+            }
+
+            .photo-preview {
+                background:
+                    white;
+
+                min-height:
+                    0;
+            }
+
+            .photo-preview img {
+                max-height:
+                    none;
+
+                width:
+                    100%;
+            }
+
+            .photo-info {
+                display:
+                    none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="logo">
+                EF
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    Marca de Agua
+                </h1>
+
+                <p>
+                    Herramienta de Eleazar FEX
+                </p>
+
+            </div>
+
+        </div>
+
+        <a
+            class="whatsapp-header"
+            href="https://wa.me/527491040729?text=Hola%20Eleazar%20FEX%2C%20tengo%20una%20duda%20sobre%20la%20herramienta%20de%20marca%20de%20agua"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            💬 WhatsApp · Asesoría
+        </a>
+
+        <div
+            class="counter"
+            id="counter"
+        >
+            0 fotografías
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         CONTENIDO
+    ========================================================== -->
+
+    <main class="main-grid">
+
+        <!-- =====================================================
+             CONFIGURACIÓN
+        ====================================================== -->
+
+        <aside class="panel settings">
+
+            <div class="section-title">
+                📁 Fotografías
+            </div>
+
+            <div
+                class="upload-area"
+                id="uploadArea"
+            >
+
+                <div class="upload-icon">
+                    📸
+                </div>
+
+                <strong>
+                    Seleccionar fotografías
+                </strong>
+
+                <small>
+                    JPG, JPEG, PNG o WEBP
+                    <br>
+                    También puedes arrastrarlas aquí
+                </small>
+
+            </div>
+
+            <input
+                type="file"
+                id="fileInput"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+            >
+
+            <div class="separator"></div>
+
+
+            <div class="section-title">
+                ✏️ Configuración
+            </div>
+
+
+            <!-- TEXTO -->
+
+            <div class="control">
+
+                <label>
+                    Texto de marca de agua
+                </label>
+
+                <input
+                    type="text"
+                    id="watermarkText"
+                    value="Eleazar FEX"
+                    maxlength="100"
+                >
+
+            </div>
+
+
+            <!-- TAMAÑO -->
+
+            <div class="control">
+
+                <label>
+
+                    Tamaño
+
+                    <span
+                        class="value"
+                        id="fontSizeValue"
+                    >
+                        50 px
+                    </span>
+
+                </label>
+
+                <input
+                    type="range"
+                    id="fontSize"
+                    min="10"
+                    max="250"
+                    value="50"
+                >
+
+            </div>
+
+
+            <!-- OPACIDAD -->
+
+            <div class="control">
+
+                <label>
+
+                    Opacidad
+
+                    <span
+                        class="value"
+                        id="opacityValue"
+                    >
+                        27%
+                    </span>
+
+                </label>
+
+                <input
+                    type="range"
+                    id="opacity"
+                    min="1"
+                    max="100"
+                    value="27"
+                >
+
+            </div>
+
+
+            <!-- ÁNGULO -->
+
+            <div class="control">
+
+                <label>
+
+                    Ángulo
+
+                    <span
+                        class="value"
+                        id="angleValue"
+                    >
+                        30°
+                    </span>
+
+                </label>
+
+                <input
+                    type="range"
+                    id="angle"
+                    min="-90"
+                    max="90"
+                    value="30"
+                >
+
+            </div>
+
+
+            <!-- COLOR -->
+
+            <div class="control">
+
+                <label>
+                    Color
+                </label>
+
+                <input
+                    type="color"
+                    id="watermarkColor"
+                    value="#ffffff"
+                >
+
+            </div>
+
+
+            <!-- SEPARACIÓN -->
+
+            <div class="control">
+
+                <label>
+                    Separación entre marcas
+                </label>
+
+                <div class="two-columns">
+
+                    <input
+                        type="number"
+                        id="spacingX"
+                        value="120"
+                        min="0"
+                        max="1000"
+                        placeholder="Horizontal"
+                    >
+
+                    <input
+                        type="number"
+                        id="spacingY"
+                        value="100"
+                        min="0"
+                        max="1000"
+                        placeholder="Vertical"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="separator"></div>
+
+
+            <!-- BOTONES -->
+
+            <div class="button-group">
+
+                <button
+                    class="btn btn-primary"
+                    id="processBtn"
+                >
+                    ✨ Aplicar marca de agua
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    id="zipBtn"
+                >
+                    📦 Descargar todas en ZIP
+                </button>
+
+                <button
+                    class="btn btn-dark"
+                    id="pdfBtn"
+                >
+                    📄 Crear PDF
+                </button>
+
+                <button
+                    class="btn btn-light"
+                    id="printBtn"
+                >
+                    🖨️ Imprimir
+                </button>
+
+                <button
+                    class="btn btn-danger"
+                    id="clearBtn"
+                >
+                    🗑️ Limpiar todo
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 WHATSAPP
+            ================================================== -->
+
+            <div class="whatsapp-box">
+
+                <div class="whatsapp-box-title">
+                    💬 ¿Necesitas asesoría?
+                </div>
+
+                <div class="whatsapp-box-text">
+                    Si tienes alguna duda o necesitas ayuda
+                    con la herramienta, escríbeme directamente
+                    por WhatsApp.
+                </div>
+
+                <a
+                    class="whatsapp-button"
+                    href="https://wa.me/527491040729?text=Hola%20Eleazar%20FEX%2C%20necesito%20asesor%C3%ADa%20o%20tengo%20una%20duda"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    📱 WhatsApp · 749 104 0729
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             FOTOS
+        ====================================================== -->
+
+        <section class="panel content">
+
+            <div class="content-header">
+
+                <div>
+
+                    <h2>
+                        🖼️ Vista previa
+                    </h2>
+
+                    <span>
+                        Las imágenes conservan su resolución original
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="status"
+                id="status"
+            ></div>
+
+
+            <div
+                class="photos-grid"
+                id="photosGrid"
+            >
+
+                <div
+                    class="empty"
+                    id="emptyState"
+                >
+
+                    <div>
+
+                        <div class="empty-icon">
+                            🖼️
+                        </div>
+
+                        <h3>
+                            No hay fotografías
+                        </h3>
+
+                        <p>
+                            Selecciona tus fotografías para comenzar.
+                            Todo el procesamiento se realiza directamente
+                            en tu navegador.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-title">
+            Eleazar FEX
+        </div>
+
+        <div class="footer-description">
+            Herramientas, tecnología y contenido para ayudarte
+            a aprovechar mejor tus recursos digitales.
+        </div>
+
+
+        <div class="social-links">
+
+            <a
+                class="social-link"
+                href="https://www.youtube.com/@EleazarFEX"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                ▶️ YouTube
+            </a>
+
+            <a
+                class="social-link"
+                href="https://www.tiktok.com/@eleazarfex"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                🎵 TikTok
+            </a>
+
+            <a
+                class="social-link"
+                href="https://sites.google.com/view/eleazarfex/inicio"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                🌐 Página web
+            </a>
+
+        </div>
+
+
+        <div class="footer-copy">
+            © 2026 Eleazar FEX · Todos los derechos reservados.
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- =========================================================
+     LOADING
+========================================================== -->
+
+<div
+    class="loading"
+    id="loading"
+>
+
+    <div class="loading-box">
+
+        <div class="spinner"></div>
+
+        <strong id="loadingText">
+            Procesando...
+        </strong>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const uploadArea =
+    document.getElementById("uploadArea");
+
+const photosGrid =
+    document.getElementById("photosGrid");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const counter =
+    document.getElementById("counter");
+
+const watermarkText =
+    document.getElementById("watermarkText");
+
+const fontSize =
+    document.getElementById("fontSize");
+
+const opacity =
+    document.getElementById("opacity");
+
+const angle =
+    document.getElementById("angle");
+
+const watermarkColor =
+    document.getElementById("watermarkColor");
+
+const spacingX =
+    document.getElementById("spacingX");
+
+const spacingY =
+    document.getElementById("spacingY");
+
+const fontSizeValue =
+    document.getElementById("fontSizeValue");
+
+const opacityValue =
+    document.getElementById("opacityValue");
+
+const angleValue =
+    document.getElementById("angleValue");
+
+const processBtn =
+    document.getElementById("processBtn");
+
+const zipBtn =
+    document.getElementById("zipBtn");
+
+const pdfBtn =
+    document.getElementById("pdfBtn");
+
+const printBtn =
+    document.getElementById("printBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const loading =
+    document.getElementById("loading");
+
+const loadingText =
+    document.getElementById("loadingText");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+
+/*
+ * Aquí almacenamos las fotografías.
+ */
+
+let photos = [];
+
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+function getSettings() {
+
+    return {
+
+        text:
+            watermarkText.value.trim()
+            || "Eleazar FEX",
+
+        fontSize:
+            Number(fontSize.value),
+
+        opacity:
+            Number(opacity.value) / 100,
+
+        angle:
+            Number(angle.value),
+
+        color:
+            watermarkColor.value,
+
+        spacingX:
+            Number(spacingX.value),
+
+        spacingY:
+            Number(spacingY.value)
+
+    };
+
+}
+
+
+/* =========================================================
+   VALORES VISIBLES
+========================================================= */
+
+fontSize.addEventListener(
+    "input",
+    () => {
+
+        fontSizeValue.textContent =
+            fontSize.value + " px";
+
+    }
+);
+
+
+opacity.addEventListener(
+    "input",
+    () => {
+
+        opacityValue.textContent =
+            opacity.value + "%";
+
+    }
+);
+
+
+angle.addEventListener(
+    "input",
+    () => {
+
+        angleValue.textContent =
+            angle.value + "°";
+
+    }
+);
+
+
+/* =========================================================
+   SELECCIÓN
+========================================================= */
+
+uploadArea.addEventListener(
+    "click",
+    () => {
+
+        fileInput.click();
+
+    }
+);
+
+
+fileInput.addEventListener(
+    "change",
+    event => {
+
+        const files =
+            Array.from(
+                event.target.files
+            );
+
+        addFiles(files);
+
+        fileInput.value = "";
+
+    }
+);
+
+
+/* =========================================================
+   DRAG AND DROP
+========================================================= */
+
+uploadArea.addEventListener(
+    "dragover",
+    event => {
+
+        event.preventDefault();
+
+        uploadArea.classList.add(
+            "dragover"
+        );
+
+    }
+);
+
+
+uploadArea.addEventListener(
+    "dragleave",
+    () => {
+
+        uploadArea.classList.remove(
+            "dragover"
+        );
+
+    }
+);
+
+
+uploadArea.addEventListener(
+    "drop",
+    event => {
+
+        event.preventDefault();
+
+        uploadArea.classList.remove(
+            "dragover"
+        );
+
+        const files =
+            Array.from(
+                event.dataTransfer.files
+            );
+
+        addFiles(files);
+
+    }
+);
+
+
+/* =========================================================
+   AGREGAR ARCHIVOS
+========================================================= */
+
+function addFiles(files) {
+
+    const imageFiles =
+        files.filter(
+            file =>
+                file.type.startsWith("image/")
+        );
+
+
+    if (!imageFiles.length) {
+
+        showStatus(
+            "Selecciona archivos de imagen válidos.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    imageFiles.forEach(
+        file => {
+
+            const id =
+                Date.now()
+                + "-"
+                + Math.random()
+                    .toString(36)
+                    .substring(2);
+
+
+            photos.push({
+
+                id:
+                    id,
+
+                file:
+                    file,
+
+                name:
+                    file.name,
+
+                originalUrl:
+                    URL.createObjectURL(
+                        file
+                    ),
+
+                processedBlob:
+                    null,
+
+                processedUrl:
+                    null,
+
+                width:
+                    0,
+
+                height:
+                    0
+
+            });
+
+        }
+    );
+
+
+    renderPhotos();
+
+    updateCounter();
+
+
+    showStatus(
+        `${imageFiles.length} fotografía(s) agregada(s).`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   CARGAR IMAGEN
+========================================================= */
+
+function loadImage(url) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const img =
+                new Image();
+
+
+            img.onload =
+                () => resolve(img);
+
+
+            img.onerror =
+                () =>
+                    reject(
+                        new Error(
+                            "No se pudo cargar la imagen."
+                        )
+                    );
+
+
+            img.src =
+                url;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+async function renderPhotos() {
+
+    photosGrid.innerHTML = "";
+
+
+    if (!photos.length) {
+
+        photosGrid.appendChild(
+            emptyState
+        );
+
+        return;
+
+    }
+
+
+    for (
+        const photo of photos
+    ) {
+
+        try {
+
+            const img =
+                await loadImage(
+                    photo.originalUrl
+                );
+
+            photo.width =
+                img.naturalWidth;
+
+            photo.height =
+                img.naturalHeight;
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+        card.className =
+            "photo-card";
+
+        card.dataset.id =
+            photo.id;
+
+
+        const preview =
+            document.createElement(
+                "div"
+            );
+
+        preview.className =
+            "photo-preview";
+
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+        image.src =
+            photo.processedUrl
+            || photo.originalUrl;
+
+        image.alt =
+            photo.name;
+
+
+        preview.appendChild(
+            image
+        );
+
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+        info.className =
+            "photo-info";
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+        name.className =
+            "photo-name";
+
+        name.textContent =
+            photo.name;
+
+
+        const size =
+            document.createElement(
+                "div"
+            );
+
+        size.className =
+            "photo-size";
+
+        size.textContent =
+            photo.width &&
+            photo.height
+                ? `${photo.width} × ${photo.height}px`
+                : "Cargando...";
+
+
+        info.appendChild(name);
+        info.appendChild(size);
+
+
+        const actions =
+            document.createElement(
+                "div"
+            );
+
+        actions.className =
+            "photo-actions";
+
+
+        const download =
+            document.createElement(
+                "button"
+            );
+
+        download.className =
+            "small-btn btn-light";
+
+        download.textContent =
+            "⬇️ Guardar";
+
+
+        download.addEventListener(
+            "click",
+            () =>
+                downloadPhoto(
+                    photo.id
+                )
+        );
+
+
+        const remove =
+            document.createElement(
+                "button"
+            );
+
+        remove.className =
+            "small-btn btn-danger";
+
+        remove.textContent =
+            "🗑️ Eliminar";
+
+
+        remove.addEventListener(
+            "click",
+            () =>
+                removePhoto(
+                    photo.id
+                )
+        );
+
+
+        actions.appendChild(
+            download
+        );
+
+        actions.appendChild(
+            remove
+        );
+
+
+        card.appendChild(
+            preview
+        );
+
+        card.appendChild(
+            info
+        );
+
+        card.appendChild(
+            actions
+        );
+
+
+        photosGrid.appendChild(
+            card
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+function updateCounter() {
+
+    const total =
+        photos.length;
+
+
+    counter.textContent =
+        `${total} fotografía${total === 1 ? "" : "s"}`;
+
+}
+
+
+/* =========================================================
+   HEX -> RGB
+========================================================= */
+
+function hexToRgb(hex) {
+
+    let clean =
+        hex.replace(
+            "#",
+            ""
+        );
+
+
+    if (clean.length === 3) {
+
+        clean =
+            clean
+                .split("")
+                .map(
+                    c => c + c
+                )
+                .join("");
+
+    }
+
+
+    const number =
+        parseInt(
+            clean,
+            16
+        );
+
+
+    return {
+
+        r:
+            (number >> 16) & 255,
+
+        g:
+            (number >> 8) & 255,
+
+        b:
+            number & 255
+
+    };
+
+}
+
+
+/* =========================================================
+   CREAR MARCA DE AGUA
+========================================================= */
+
+async function createWatermarkedImage(
+    photo
+) {
+
+    const settings =
+        getSettings();
+
+
+    const img =
+        await loadImage(
+            photo.originalUrl
+        );
+
+
+    const width =
+        img.naturalWidth;
+
+    const height =
+        img.naturalHeight;
+
+
+    /*
+     * Canvas EXACTAMENTE del tamaño
+     * original de la fotografía.
+     */
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        width;
+
+    canvas.height =
+        height;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    /*
+     * Calidad máxima de dibujo.
+     */
+
+    ctx.imageSmoothingEnabled =
+        true;
+
+    ctx.imageSmoothingQuality =
+        "high";
+
+
+    /*
+     * Fotografía original.
+     */
+
+    ctx.drawImage(
+        img,
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * Capa de marca.
+     */
+
+    const layer =
+        document.createElement(
+            "canvas"
+        );
+
+
+    layer.width =
+        width * 2;
+
+    layer.height =
+        height * 2;
+
+
+    const lctx =
+        layer.getContext(
+            "2d"
+        );
+
+
+    /*
+     * Tipografía.
+     */
+
+    lctx.font =
+        `bold ${settings.fontSize}px Arial, sans-serif`;
+
+    lctx.textBaseline =
+        "top";
+
+
+    const metrics =
+        lctx.measureText(
+            settings.text
+        );
+
+
+    const textWidth =
+        metrics.width;
+
+
+    const textHeight =
+        settings.fontSize * 1.2;
+
+
+    const stepX =
+        Math.max(
+            20,
+            textWidth +
+                settings.spacingX
+        );
+
+
+    const stepY =
+        Math.max(
+            20,
+            textHeight +
+                settings.spacingY
+        );
+
+
+    const rgb =
+        hexToRgb(
+            settings.color
+        );
+
+
+    lctx.fillStyle =
+        `rgba(${rgb.r},${rgb.g},${rgb.b},${settings.opacity})`;
+
+
+    /*
+     * Repetir marca.
+     */
+
+    for (
+        let y = 0;
+        y < layer.height;
+        y += stepY
+    ) {
+
+        for (
+            let x = 0;
+            x < layer.width;
+            x += stepX
+        ) {
+
+            lctx.fillText(
+                settings.text,
+                x,
+                y
+            );
+
+        }
+
+    }
+
+
+    /*
+     * Rotación.
+     */
+
+    const radians =
+        settings.angle *
+        Math.PI /
+        180;
+
+
+    const cos =
+        Math.abs(
+            Math.cos(
+                radians
+            )
+        );
+
+
+    const sin =
+        Math.abs(
+            Math.sin(
+                radians
+            )
+        );
+
+
+    const rotated =
+        document.createElement(
+            "canvas"
+        );
+
+
+    rotated.width =
+        Math.ceil(
+            layer.width * cos +
+            layer.height * sin
+        );
+
+
+    rotated.height =
+        Math.ceil(
+            layer.width * sin +
+            layer.height * cos
+        );
+
+
+    const rctx =
+        rotated.getContext(
+            "2d"
+        );
+
+
+    rctx.translate(
+        rotated.width / 2,
+        rotated.height / 2
+    );
+
+
+    rctx.rotate(
+        radians
+    );
+
+
+    rctx.drawImage(
+        layer,
+        -layer.width / 2,
+        -layer.height / 2
+    );
+
+
+    /*
+     * Marca sobre fotografía.
+     */
+
+    ctx.drawImage(
+        rotated,
+        (width -
+            rotated.width) / 2,
+        (height -
+            rotated.height) / 2
+    );
+
+
+    /*
+     * PNG conserva transparencia.
+     * JPEG calidad 95%.
+     */
+
+    const mime =
+        photo.file.type === "image/png"
+            ? "image/png"
+            : "image/jpeg";
+
+
+    const quality =
+        mime === "image/jpeg"
+            ? 0.95
+            : undefined;
+
+
+    const blob =
+        await new Promise(
+            resolve => {
+
+                canvas.toBlob(
+                    resolve,
+                    mime,
+                    quality
+                );
+
+            }
+        );
+
+
+    if (!blob) {
+
+        throw new Error(
+            "No se pudo generar la imagen."
+        );
+
+    }
+
+
+    return {
+
+        blob:
+            blob,
+
+        width:
+            width,
+
+        height:
+            height,
+
+        mime:
+            mime
+
+    };
+
+}
+
+
+/* =========================================================
+   PROCESAR TODO
+========================================================= */
+
+async function processAll() {
+
+    if (!photos.length) {
+
+        showStatus(
+            "Primero selecciona fotografías.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    showLoading(
+        "Aplicando marca de agua..."
+    );
+
+
+    try {
+
+        for (
+            let i = 0;
+            i < photos.length;
+            i++
+        ) {
+
+            const photo =
+                photos[i];
+
+
+            updateLoading(
+                `Procesando ${i + 1} de ${photos.length}...`,
+                (i /
+                    photos.length) *
+                    100
+            );
+
+
+            const result =
+                await createWatermarkedImage(
+                    photo
+                );
+
+
+            if (
+                photo.processedUrl
+            ) {
+
+                URL.revokeObjectURL(
+                    photo.processedUrl
+                );
+
+            }
+
+
+            photo.processedBlob =
+                result.blob;
+
+
+            photo.processedUrl =
+                URL.createObjectURL(
+                    result.blob
+                );
+
+
+            photo.width =
+                result.width;
+
+
+            photo.height =
+                result.height;
+
+        }
+
+
+        updateLoading(
+            "Finalizando...",
+            100
+        );
+
+
+        await delay(300);
+
+
+        await renderPhotos();
+
+
+        showStatus(
+            `Marca de agua aplicada correctamente a ${photos.length} fotografía(s).`,
+            "success"
+        );
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Ocurrió un error al procesar las fotografías.",
+            "error"
+        );
+
+        return false;
+
+    } finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =========================================================
+   ASEGURAR PROCESAMIENTO
+========================================================= */
+
+async function ensureProcessed() {
+
+    if (
+        photos.length &&
+        photos.every(
+            photo =>
+                photo.processedBlob
+        )
+    ) {
+
+        return true;
+
+    }
+
+
+    return await processAll();
+
+}
+
+
+/* =========================================================
+   DESCARGAR INDIVIDUAL
+========================================================= */
+
+async function downloadPhoto(
+    id
+) {
+
+    const photo =
+        photos.find(
+            item =>
+                item.id === id
+        );
+
+
+    if (!photo) return;
+
+
+    showLoading(
+        "Preparando fotografía..."
+    );
+
+
+    try {
+
+        if (
+            !photo.processedBlob
+        ) {
+
+            const result =
+                await createWatermarkedImage(
+                    photo
+                );
+
+
+            photo.processedBlob =
+                result.blob;
+
+
+            photo.processedUrl =
+                URL.createObjectURL(
+                    result.blob
+                );
+
+        }
+
+
+        const extension =
+            photo.file.type ===
+            "image/png"
+                ? "png"
+                : "jpg";
+
+
+        const fileName =
+            createOutputName(
+                photo.name,
+                extension
+            );
+
+
+        downloadBlob(
+            photo.processedBlob,
+            fileName
+        );
+
+
+        showStatus(
+            "Fotografía guardada correctamente.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "No se pudo guardar la fotografía.",
+            "error"
+        );
+
+    } finally {
+
+        hideLoading();
+
+        await renderPhotos();
+
+    }
+
+}
+
+
+/* =========================================================
+   NOMBRE
+========================================================= */
+
+function createOutputName(
+    originalName,
+    extension
+) {
+
+    const dot =
+        originalName.lastIndexOf(
+            "."
+        );
+
+
+    const base =
+        dot > 0
+            ? originalName.substring(
+                0,
+                dot
+            )
+            : originalName;
+
+
+    return `marca_${base}.${extension}`;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadBlob(
+    blob,
+    filename
+) {
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+        () => {
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================================================
+   ZIP
+========================================================= */
+
+async function downloadZip() {
+
+    if (!photos.length) {
+
+        showStatus(
+            "Primero selecciona fotografías.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const processed =
+        await ensureProcessed();
+
+
+    if (!processed) return;
+
+
+    showLoading(
+        "Creando ZIP..."
+    );
+
+
+    try {
+
+        const zip =
+            new JSZip();
+
+
+        const folder =
+            zip.folder(
+                "Eleazar-FEX-Muestras"
+            );
+
+
+        for (
+            let i = 0;
+            i < photos.length;
+            i++
+        ) {
+
+            const photo =
+                photos[i];
+
+
+            const extension =
+                photo.file.type ===
+                "image/png"
+                    ? "png"
+                    : "jpg";
+
+
+            const name =
+                createOutputName(
+                    photo.name,
+                    extension
+                );
+
+
+            folder.file(
+                name,
+                photo.processedBlob
+            );
+
+
+            updateLoading(
+                `Agregando ${i + 1} de ${photos.length}...`,
+                ((i + 1) /
+                    photos.length) *
+                    100
+            );
+
+        }
+
+
+        const zipBlob =
+            await zip.generateAsync(
+                {
+                    type:
+                        "blob",
+
+                    compression:
+                        "DEFLATE",
+
+                    compressionOptions:
+                        {
+                            level:
+                                6
+                        }
+                },
+
+                metadata => {
+
+                    updateLoading(
+                        "Comprimiendo ZIP...",
+                        metadata.percent
+                    );
+
+                }
+            );
+
+
+        downloadBlob(
+            zipBlob,
+            "Eleazar-FEX-Muestras.zip"
+        );
+
+
+        showStatus(
+            "ZIP creado correctamente.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "No se pudo crear el ZIP.",
+            "error"
+        );
+
+    } finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =========================================================
+   PDF
+========================================================= */
+
+async function createPDF() {
+
+    if (!photos.length) {
+
+        showStatus(
+            "Primero selecciona fotografías.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const processed =
+        await ensureProcessed();
+
+
+    if (!processed) return;
+
+
+    showLoading(
+        "Creando PDF..."
+    );
+
+
+    try {
+
+        const {
+            jsPDF
+        } =
+            window.jspdf;
+
+
+        let pdf =
+            null;
+
+
+        for (
+            let i = 0;
+            i < photos.length;
+            i++
+        ) {
+
+            const photo =
+                photos[i];
+
+
+            updateLoading(
+                `Agregando foto ${i + 1} de ${photos.length}...`,
+                ((i + 1) /
+                    photos.length) *
+                    100
+            );
+
+
+            const dataUrl =
+                await blobToDataURL(
+                    photo.processedBlob
+                );
+
+
+            /*
+             * Página proporcional.
+             * Evitamos forzar todas las fotografías
+             * a un formato que no corresponde.
+             */
+
+            const maxMm =
+                297;
+
+
+            const ratio =
+                photo.width /
+                photo.height;
+
+
+            let pageWidth;
+            let pageHeight;
+
+
+            if (
+                photo.width >=
+                photo.height
+            ) {
+
+                pageWidth =
+                    maxMm;
+
+                pageHeight =
+                    maxMm /
+                    ratio;
+
+            } else {
+
+                pageHeight =
+                    maxMm;
+
+                pageWidth =
+                    maxMm *
+                    ratio;
+
+            }
+
+
+            if (!pdf) {
+
+                pdf =
+                    new jsPDF(
+                        {
+
+                            orientation:
+                                photo.width >=
+                                photo.height
+                                    ? "landscape"
+                                    : "portrait",
+
+                            unit:
+                                "mm",
+
+                            format:
+                                [
+                                    pageWidth,
+                                    pageHeight
+                                ],
+
+                            compress:
+                                true
+
+                        }
+                    );
+
+            } else {
+
+                pdf.addPage(
+                    [
+                        pageWidth,
+                        pageHeight
+                    ],
+
+                    photo.width >=
+                    photo.height
+                        ? "landscape"
+                        : "portrait"
+                );
+
+            }
+
+
+            const imageType =
+                photo.file.type ===
+                "image/png"
+                    ? "PNG"
+                    : "JPEG";
+
+
+            pdf.addImage(
+                dataUrl,
+                imageType,
+                0,
+                0,
+                pageWidth,
+                pageHeight,
+                undefined,
+                "FAST"
+            );
+
+        }
+
+
+        updateLoading(
+            "Guardando PDF...",
+            100
+        );
+
+
+        await delay(400);
+
+
+        pdf.save(
+            "Eleazar-FEX-Muestras.pdf"
+        );
+
+
+        showStatus(
+            "PDF creado y descargado correctamente.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "No se pudo crear el PDF. Si seleccionaste muchas fotografías de alta resolución, intenta hacerlo por grupos.",
+            "error"
+        );
+
+    } finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =========================================================
+   BLOB -> DATA URL
+========================================================= */
+
+function blobToDataURL(
+    blob
+) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () =>
+                    resolve(
+                        reader.result
+                    );
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(
+                blob
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ELIMINAR
+========================================================= */
+
+function removePhoto(
+    id
+) {
+
+    const index =
+        photos.findIndex(
+            photo =>
+                photo.id === id
+        );
+
+
+    if (index === -1) return;
+
+
+    const photo =
+        photos[index];
+
+
+    if (
+        photo.originalUrl
+    ) {
+
+        URL.revokeObjectURL(
+            photo.originalUrl
+        );
+
+    }
+
+
+    if (
+        photo.processedUrl
+    ) {
+
+        URL.revokeObjectURL(
+            photo.processedUrl
+        );
+
+    }
+
+
+    photos.splice(
+        index,
+        1
+    );
+
+
+    renderPhotos();
+
+    updateCounter();
+
+
+    showStatus(
+        "Fotografía eliminada.",
+        "info"
+    );
+
+}
+
+
+/* =========================================================
+   LIMPIAR
+========================================================= */
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        if (!photos.length) {
+            return;
+        }
+
+
+        if (
+            !confirm(
+                "¿Quieres eliminar todas las fotografías?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        photos.forEach(
+            photo => {
+
+                if (
+                    photo.originalUrl
+                ) {
+
+                    URL.revokeObjectURL(
+                        photo.originalUrl
+                    );
+
+                }
+
+
+                if (
+                    photo.processedUrl
+                ) {
+
+                    URL.revokeObjectURL(
+                        photo.processedUrl
+                    );
+
+                }
+
+            }
+        );
+
+
+        photos = [];
+
+
+        renderPhotos();
+
+        updateCounter();
+
+
+        showStatus(
+            "Todas las fotografías fueron eliminadas.",
+            "info"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+processBtn.addEventListener(
+    "click",
+    () => {
+
+        processAll();
+
+    }
+);
+
+
+zipBtn.addEventListener(
+    "click",
+    () => {
+
+        downloadZip();
+
+    }
+);
+
+
+pdfBtn.addEventListener(
+    "click",
+    () => {
+
+        createPDF();
+
+    }
+);
+
+
+printBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (!photos.length) {
+
+            showStatus(
+                "Primero selecciona fotografías.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const processed =
+            await ensureProcessed();
+
+
+        if (!processed) return;
+
+
+        await renderPhotos();
+
+
+        setTimeout(
+            () => {
+
+                window.print();
+
+            },
+            500
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CAMBIOS DE CONFIGURACIÓN
+========================================================= */
+
+[
+    watermarkText,
+    fontSize,
+    opacity,
+    angle,
+    watermarkColor,
+    spacingX,
+    spacingY
+
+].forEach(
+    element => {
+
+        element.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    photos.length
+                ) {
+
+                    showStatus(
+                        "La configuración cambió. Pulsa «Aplicar marca de agua» para actualizar las fotografías.",
+                        "info"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(
+    message,
+    type
+) {
+
+    statusBox.textContent =
+        message;
+
+
+    statusBox.className =
+        `status show ${type}`;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(
+    text
+) {
+
+    loadingText.textContent =
+        text;
+
+
+    progressBar.style.width =
+        "0%";
+
+
+    loading.classList.add(
+        "show"
+    );
+
+}
+
+
+function updateLoading(
+    text,
+    percent
+) {
+
+    loadingText.textContent =
+        text;
+
+
+    progressBar.style.width =
+        `${Math.max(
+            0,
+            Math.min(
+                100,
+                percent
+            )
+        )}%`;
+
+}
+
+
+function hideLoading() {
+
+    loading.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   DELAY
+========================================================= */
+
+function delay(
+    milliseconds
+) {
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                milliseconds
+            )
+    );
+
+}
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+renderPhotos();
+
+updateCounter();
+
+
+/* =========================================================
+   LIBERAR MEMORIA AL CERRAR
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        photos.forEach(
+            photo => {
+
+                if (
+                    photo.originalUrl
+                ) {
+
+                    URL.revokeObjectURL(
+                        photo.originalUrl
+                    );
+
+                }
+
+
+                if (
+                    photo.processedUrl
+                ) {
+
+                    URL.revokeObjectURL(
+                        photo.processedUrl
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+
