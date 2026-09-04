@@ -1,0 +1,3649 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>ComandaPro</title>
+
+<style>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+    --primary:#111827;
+    --primary-light:#1f2937;
+
+    --accent:#f59e0b;
+    --accent-dark:#d97706;
+
+    --green:#25D366;
+    --red:#dc2626;
+
+    --background:#f4f5f7;
+    --white:#ffffff;
+
+    --gray:#6b7280;
+    --light:#f3f4f6;
+    --border:#e5e7eb;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background:var(--background);
+
+    color:#171717;
+
+    min-height:100vh;
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+button,
+input,
+textarea{
+
+    font-family:inherit;
+
+}
+
+button{
+
+    border:0;
+
+    cursor:pointer;
+
+}
+
+input,
+textarea{
+
+    outline:none;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    background:var(--primary);
+
+    color:white;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+
+/* =========================================================
+   HEADER SUPERIOR
+========================================================= */
+
+.header-top{
+
+    min-height:67px;
+
+    padding:
+        11px
+        13px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+}
+
+
+/* =========================================================
+   NEGOCIO
+========================================================= */
+
+.business{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    min-width:0;
+
+}
+
+.logo{
+
+    width:43px;
+
+    height:43px;
+
+    border-radius:11px;
+
+    background:#374151;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:21px;
+
+    flex-shrink:0;
+
+}
+
+.business-info{
+
+    min-width:0;
+
+}
+
+.business-name{
+
+    font-size:18px;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.business-slogan{
+
+    margin-top:3px;
+
+    font-size:11px;
+
+    color:#d1d5db;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+/* =========================================================
+   BOTÓN MENU
+========================================================= */
+
+.menu-button{
+
+    width:43px;
+
+    height:43px;
+
+    border-radius:11px;
+
+    background:#374151;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    flex-shrink:0;
+
+}
+
+
+/* =========================================================
+   MENU DESPLEGABLE
+========================================================= */
+
+.business-menu{
+
+    display:none;
+
+    background:white;
+
+    color:#111827;
+
+    border-top:1px solid #374151;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.15);
+
+}
+
+.business-menu.show{
+
+    display:block;
+
+}
+
+.menu-content{
+
+    padding:14px;
+
+}
+
+.menu-title{
+
+    font-size:13px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    color:#374151;
+
+}
+
+.menu-links{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+}
+
+.menu-link{
+
+    min-height:45px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        8px
+        10px;
+
+    text-decoration:none;
+
+    color:#111827;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    background:#fff;
+
+}
+
+.menu-link:active{
+
+    background:#f3f4f6;
+
+}
+
+.menu-icon{
+
+    font-size:18px;
+
+}
+
+
+/* =========================================================
+   BUSCADOR
+========================================================= */
+
+.search-container{
+
+    padding:
+        0
+        12px
+        12px;
+
+}
+
+.search-wrapper{
+
+    position:relative;
+
+}
+
+.search{
+
+    width:100%;
+
+    height:46px;
+
+    border-radius:12px;
+
+    border:0;
+
+    padding:
+        0
+        42px;
+
+    font-size:15px;
+
+    background:white;
+
+    color:#111827;
+
+}
+
+.search::placeholder{
+
+    color:#9ca3af;
+
+}
+
+.search-icon{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:18px;
+
+    pointer-events:none;
+
+}
+
+.clear-search{
+
+    position:absolute;
+
+    right:8px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:32px;
+
+    height:32px;
+
+    border-radius:50%;
+
+    background:#f3f4f6;
+
+    color:#6b7280;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+}
+
+.clear-search.show{
+
+    display:flex;
+
+}
+
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.container{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:
+        12px
+        12px
+        115px;
+
+}
+
+
+/* =========================================================
+   SECCIONES
+========================================================= */
+
+.section{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+    border:1px solid var(--border);
+
+}
+
+.section-title{
+
+    font-size:15px;
+
+    font-weight:800;
+
+    margin-bottom:12px;
+
+}
+
+
+/* =========================================================
+   FORMULARIOS
+========================================================= */
+
+.form-group{
+
+    margin-bottom:10px;
+
+}
+
+.form-group:last-child{
+
+    margin-bottom:0;
+
+}
+
+.label{
+
+    display:block;
+
+    font-size:12px;
+
+    color:var(--gray);
+
+    font-weight:600;
+
+    margin-bottom:5px;
+
+}
+
+.input{
+
+    width:100%;
+
+    min-height:44px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:10px;
+
+    padding:
+        10px
+        12px;
+
+    font-size:14px;
+
+    background:white;
+
+}
+
+textarea.input{
+
+    min-height:74px;
+
+    resize:none;
+
+}
+
+.input:focus{
+
+    border-color:var(--accent);
+
+}
+
+
+/* =========================================================
+   MESAS
+========================================================= */
+
+.tables{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:8px;
+
+}
+
+.table{
+
+    min-height:64px;
+
+    background:#f8f9fa;
+
+    border:
+        2px solid
+        var(--border);
+
+    border-radius:12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:2px;
+
+}
+
+.table-icon{
+
+    font-size:21px;
+
+}
+
+.table-number{
+
+    font-size:12px;
+
+    font-weight:800;
+
+}
+
+.table.selected{
+
+    background:#fff7ed;
+
+    border-color:var(--accent);
+
+}
+
+
+
+/* =========================================================
+   OPCIÓN PARA LLEVAR
+========================================================= */
+.takeaway-option{
+    margin-top:14px;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:#fffaf0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+.takeaway-heading{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+.takeaway-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:#fff0cf;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    flex-shrink:0;
+}
+.takeaway-heading strong{
+    display:block;
+    font-size:14px;
+    color:#111827;
+}
+.takeaway-heading small{
+    display:block;
+    margin-top:3px;
+    font-size:11px;
+    color:var(--gray);
+}
+.takeaway-switch{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+.takeaway-switch input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+}
+.takeaway-slider{
+    width:45px;
+    height:25px;
+    border-radius:30px;
+    background:#d1d5db;
+    position:relative;
+    transition:.2s;
+}
+.takeaway-slider::after{
+    content:"";
+    position:absolute;
+    top:3px;
+    left:3px;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 1px 3px rgba(0,0,0,.2);
+    transition:.2s;
+}
+.takeaway-switch input:checked + .takeaway-slider{
+    background:var(--accent);
+}
+.takeaway-switch input:checked + .takeaway-slider::after{
+    transform:translateX(20px);
+}
+.takeaway-label{
+    min-width:22px;
+    font-size:12px;
+    font-weight:800;
+    color:var(--gray);
+}
+@media(max-width:480px){
+    .takeaway-option{
+        align-items:flex-start;
+        padding:12px;
+    }
+    .takeaway-heading strong{font-size:13px}
+    .takeaway-heading small{font-size:10px}
+}
+
+
+.order-fee{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:11px 12px;
+    margin-top:8px;
+    border-radius:10px;
+    background:#fff7ed;
+    border:1px dashed #f59e0b;
+    color:#92400e;
+    font-size:13px;
+}
+.order-fee strong{font-size:13px}
+
+/* =========================================================
+   TÍTULO MENÚ
+========================================================= */
+
+.menu-section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+}
+
+.menu-section-title h2{
+
+    font-size:15px;
+
+}
+
+.menu-count{
+
+    font-size:11px;
+
+    color:var(--gray);
+
+}
+
+
+/* =========================================================
+   PRODUCTOS
+========================================================= */
+
+.products{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.product{
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:13px;
+
+    padding:13px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    min-height:77px;
+
+}
+
+.product-info{
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+.product-name{
+
+    font-size:14px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    margin-bottom:4px;
+
+}
+
+.product-description{
+
+    font-size:11px;
+
+    color:var(--gray);
+
+    line-height:1.35;
+
+}
+
+.product-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:7px;
+
+    flex-shrink:0;
+
+}
+
+.product-price{
+
+    font-size:15px;
+
+    font-weight:800;
+
+    color:var(--accent-dark);
+
+}
+
+.add{
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:9px;
+
+    min-width:70px;
+
+    height:34px;
+
+    padding:
+        0
+        9px;
+
+    font-size:12px;
+
+    font-weight:800;
+
+}
+
+.add:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* =========================================================
+   SIN RESULTADOS
+========================================================= */
+
+.no-results{
+
+    text-align:center;
+
+    padding:
+        45px
+        15px;
+
+    color:var(--gray);
+
+    background:white;
+
+    border-radius:13px;
+
+    border:1px solid var(--border);
+
+}
+
+.no-results-icon{
+
+    font-size:38px;
+
+    margin-bottom:8px;
+
+}
+
+
+/* =========================================================
+   BARRA DE COMANDA
+========================================================= */
+
+.cart-bar{
+
+    position:fixed;
+
+    left:10px;
+
+    right:10px;
+
+    bottom:10px;
+
+    z-index:200;
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:16px;
+
+    padding:
+        10px
+        12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.25);
+
+}
+
+.cart-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    min-width:0;
+
+}
+
+.cart-icon{
+
+    width:39px;
+
+    height:39px;
+
+    background:#374151;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+}
+
+.cart-text{
+
+    min-width:0;
+
+}
+
+.cart-count{
+
+    font-size:11px;
+
+    color:#d1d5db;
+
+}
+
+.cart-total{
+
+    font-size:16px;
+
+    font-weight:800;
+
+}
+
+.view-cart{
+
+    background:var(--accent);
+
+    color:#111827;
+
+    border-radius:11px;
+
+    height:40px;
+
+    padding:
+        0
+        15px;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    flex-shrink:0;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.55);
+
+    z-index:500;
+
+    display:none;
+
+    align-items:flex-end;
+
+}
+
+.modal.show{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    background:var(--background);
+
+    width:100%;
+
+    max-height:94vh;
+
+    border-radius:
+        22px
+        22px
+        0
+        0;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.modal-header{
+
+    background:white;
+
+    padding:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+.modal-header h2{
+
+    font-size:18px;
+
+}
+
+.close{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:#f3f4f6;
+
+    font-size:18px;
+
+}
+
+.modal-body{
+
+    overflow-y:auto;
+
+    padding:12px;
+
+}
+
+.order-item{
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:13px;
+
+    padding:12px;
+
+    margin-bottom:8px;
+
+}
+
+.order-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+}
+
+.order-name{
+
+    font-size:14px;
+
+    font-weight:800;
+
+}
+
+.order-subtotal{
+
+    font-size:14px;
+
+    font-weight:800;
+
+}
+
+.order-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:9px;
+
+}
+
+.quantity{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+}
+
+.qty{
+
+    width:31px;
+
+    height:31px;
+
+    border-radius:8px;
+
+    background:#f3f4f6;
+
+    font-size:16px;
+
+    font-weight:900;
+
+}
+
+.quantity span{
+
+    min-width:20px;
+
+    text-align:center;
+
+    font-weight:800;
+
+}
+
+.remove{
+
+    color:var(--red);
+
+    background:none;
+
+    font-size:11px;
+
+    font-weight:700;
+
+}
+
+.note{
+
+    width:100%;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:8px;
+
+    margin-top:9px;
+
+    padding:8px;
+
+    font-size:12px;
+
+}
+
+.empty{
+
+    text-align:center;
+
+    color:var(--gray);
+
+    padding:50px 15px;
+
+}
+
+.empty div{
+
+    font-size:42px;
+
+    margin-bottom:8px;
+
+}
+
+
+/* =========================================================
+   FOOTER DEL MODAL
+========================================================= */
+
+.modal-footer{
+
+    background:white;
+
+    padding:14px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+}
+
+.total-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:12px;
+
+}
+
+.total-label{
+
+    font-size:14px;
+
+    color:var(--gray);
+
+}
+
+.total-value{
+
+    font-size:24px;
+
+    font-weight:900;
+
+}
+
+.whatsapp{
+
+    width:100%;
+
+    height:52px;
+
+    border-radius:12px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:900;
+
+}
+
+.whatsapp:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================================================
+   ALERTA
+========================================================= */
+
+.alert{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:78px;
+
+    transform:
+        translate(-50%,20px);
+
+    background:#111827;
+
+    color:white;
+
+    padding:
+        11px
+        16px;
+
+    border-radius:10px;
+
+    font-size:12px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.2s;
+
+    z-index:1000;
+
+    white-space:nowrap;
+
+}
+
+.alert.show{
+
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+
+}
+
+
+/* RESULTADOS INMEDIATOS DEL BUSCADOR */
+.search-results{
+    position:absolute;
+    top:calc(100% + 8px);
+    width:100%;
+    left:0;
+    right:0;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 14px 35px rgba(0,0,0,.16);
+    overflow:hidden;
+    display:none;
+    z-index:300;
+    max-height:55vh;
+    overflow-y:auto;
+}
+.search-results.show{display:block}
+.search-result{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 14px;border-bottom:1px solid var(--light);cursor:pointer;
+}
+.search-result:last-child{border-bottom:0}
+.search-result:hover{background:#f8fafc}
+.search-result-name{font-weight:700;font-size:14px}
+.search-result-description{font-size:12px;color:var(--gray);margin-top:3px}
+.search-result-price{font-weight:800;color:var(--accent-dark);white-space:nowrap}
+.search-empty{padding:16px;text-align:center;color:var(--gray);font-size:13px}
+.support-footer{padding:20px 12px 105px;background:#fff;border-top:1px solid var(--border)}
+.support-footer-content{max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.support-footer strong,.support-footer span{display:block}
+.support-footer strong{font-size:14px}.support-footer span{font-size:12px;color:var(--gray);margin-top:4px}
+.support-whatsapp{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;padding:12px 16px;border-radius:12px;font-size:13px;font-weight:800;white-space:nowrap}
+@media(max-width:600px){.support-footer-content{flex-direction:column;align-items:stretch;text-align:center}.support-whatsapp{justify-content:center}.search-results{max-height:50vh}}
+
+
+/* AJUSTES FINALES: BUSCADOR RESPONSIVO */
+.search-results{
+    min-width:0;
+    max-width:100%;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+}
+.search-result > div:first-child{
+    min-width:0;
+    flex:1;
+}
+.search-result-name,
+.search-result-description{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+@media(max-width:480px){
+    .search-results{
+        top:calc(100% + 6px);
+        border-radius:12px;
+        max-height:46vh;
+    }
+    .search-result{
+        padding:11px 12px;
+        gap:8px;
+    }
+    .search-result-name{font-size:13px}
+    .search-result-description{font-size:11px}
+    .search-result-price{font-size:12px}
+}
+
+
+/* RESULTADOS DEL BUSCADOR CON BOTÓN AGREGAR */
+.search-result{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+.search-result-main{
+    min-width:0;
+    flex:1;
+}
+.search-result-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-shrink:0;
+}
+.search-add{
+    min-height:34px;
+    padding:0 11px;
+    border-radius:9px;
+    background:var(--primary);
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+}
+.search-add:active{
+    transform:scale(.96);
+}
+@media(max-width:480px){
+    .search-result{
+        align-items:flex-start;
+    }
+    .search-result-actions{
+        flex-direction:column;
+        align-items:flex-end;
+        gap:5px;
+    }
+    .search-add{
+        min-height:32px;
+        padding:0 9px;
+        font-size:11px;
+    }
+}
+
+/* =========================================================
+   TABLET / COMPUTADORA
+========================================================= */
+
+@media(min-width:700px){
+
+    .container{
+
+        padding-bottom:40px;
+
+    }
+
+    .cart-bar{
+
+        max-width:500px;
+
+        left:50%;
+
+        right:auto;
+
+        width:500px;
+
+        transform:
+            translateX(-50%);
+
+    }
+
+    .modal{
+
+        align-items:center;
+
+        justify-content:center;
+
+    }
+
+    .modal-content{
+
+        width:500px;
+
+        max-height:90vh;
+
+        border-radius:20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUY PEQUEÑOS
+========================================================= */
+
+@media(max-width:350px){
+
+    .tables{
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+    }
+
+    .product{
+
+        padding:11px;
+
+    }
+
+    .product-name{
+
+        font-size:13px;
+
+    }
+
+    .product-description{
+
+        font-size:10px;
+
+    }
+
+    .product-price{
+
+        font-size:14px;
+
+    }
+
+    .add{
+
+        min-width:62px;
+
+        font-size:11px;
+
+    }
+
+    .view-cart{
+
+        padding:
+            0
+            11px;
+
+    }
+
+}
+
+
+/* CORRECCIÓN VISUAL: MOSTRAR SIEMPRE EL NOMBRE DEL PLATILLO */
+.search-result-main{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    min-width:0 !important;
+    flex:1 1 auto !important;
+    color:#111827 !important;
+}
+.search-result-name{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    color:#111827 !important;
+    font-size:15px !important;
+    font-weight:800 !important;
+    line-height:1.25 !important;
+    min-height:19px !important;
+    margin:0 0 4px !important;
+}
+.search-result-description{
+    display:block !important;
+    visibility:visible !important;
+    color:#6b7280 !important;
+    font-size:12px !important;
+    line-height:1.3 !important;
+    margin:0 !important;
+}
+.search-result{
+    min-height:72px !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+
+    <div class="header-top">
+
+
+        <div class="business">
+
+
+            <div class="logo">
+                🍽️
+            </div>
+
+
+            <div class="business-info">
+
+                <div
+                    class="business-name"
+                    id="businessName"
+                >
+                    Sabor Express
+                </div>
+
+                <div
+                    class="business-slogan"
+                    id="businessSlogan"
+                >
+                    Sabor sin rodeos
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- BOTÓN MENÚ -->
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Abrir menú"
+        >
+            ☰
+        </button>
+
+
+    </div>
+
+
+    <!-- ==================================================
+         MENU DESPLEGABLE
+    =================================================== -->
+
+    <div
+        class="business-menu"
+        id="businessMenu"
+    >
+
+        <div class="menu-content">
+
+
+            <div class="menu-title">
+                Información del negocio
+            </div>
+
+
+            <div class="menu-links">
+
+
+                <a
+                    class="menu-link"
+                    id="facebookLink"
+                    href="#"
+                    target="_blank"
+                >
+
+                    <span class="menu-icon">
+                        📘
+                    </span>
+
+                    Facebook
+
+                </a>
+
+
+                <a
+                    class="menu-link"
+                    id="instagramLink"
+                    href="#"
+                    target="_blank"
+                >
+
+                    <span class="menu-icon">
+                        📸
+                    </span>
+
+                    Instagram
+
+                </a>
+
+
+                <a
+                    class="menu-link"
+                    id="tiktokLink"
+                    href="#"
+                    target="_blank"
+                >
+
+                    <span class="menu-icon">
+                        🎵
+                    </span>
+
+                    TikTok
+
+                </a>
+
+
+                <a
+                    class="menu-link"
+                    id="websiteLink"
+                    href="#"
+                    target="_blank"
+                >
+
+                    <span class="menu-icon">
+                        🌐
+                    </span>
+
+                    Página web
+
+                </a>
+
+
+                <a
+                    class="menu-link"
+                    id="mapsLink"
+                    href="#"
+                    target="_blank"
+                    style="grid-column:1/-1;"
+                >
+
+                    <span class="menu-icon">
+                        📍
+                    </span>
+
+                    Ver ubicación en Google Maps
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         BUSCADOR
+    =================================================== -->
+
+    <div class="search-container">
+
+        <div class="search-wrapper">
+
+
+            <span class="search-icon">
+                🔎
+            </span>
+
+
+            <input
+                id="search"
+                class="search"
+                type="search"
+                placeholder="Buscar platillo..."
+                autocomplete="off"
+                spellcheck="false"
+            >
+
+
+            <button
+                id="clearSearch"
+                class="clear-search"
+                type="button"
+            >
+                ✕
+            </button>
+
+
+        </div>
+
+        <div id="searchResults" class="search-results" aria-live="polite"></div>
+
+    </div>
+
+
+</header>
+
+
+<!-- ======================================================
+     CONTENIDO
+======================================================= -->
+
+<main class="container">
+
+
+    <!-- ==================================================
+         DATOS DE LA ORDEN
+    =================================================== -->
+
+    <section class="section">
+
+
+        <div class="section-title">
+            📋 Datos de la orden
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label class="label">
+                Nombre del cliente
+            </label>
+
+
+            <input
+                id="customer"
+                class="input"
+                type="text"
+                placeholder="Ej. Juan Pérez"
+                autocomplete="off"
+            >
+
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <label class="label">
+                Nota general
+            </label>
+
+
+            <textarea
+                id="generalNote"
+                class="input"
+                placeholder="Ej. Entregar rápido, sin cebolla..."
+            ></textarea>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ==================================================
+         MESAS
+    =================================================== -->
+
+    <section class="section">
+
+
+        <div class="section-title">
+            🪑 Selecciona una mesa
+        </div>
+
+
+        <div
+            class="tables"
+            id="tables"
+        ></div>
+
+        <div class="takeaway-option">
+            <div class="takeaway-heading">
+                <span class="takeaway-icon">🛍️</span>
+                <div>
+                    <strong>¿Pedido para llevar?</strong>
+                    <small>Se agregará un cargo de envase de $5.00</small>
+                </div>
+            </div>
+
+            <label class="takeaway-switch">
+                <input type="checkbox" id="takeaway">
+                <span class="takeaway-slider"></span>
+                <span class="takeaway-label" id="takeawayLabel">No</span>
+            </label>
+        </div>
+
+
+    </section>
+
+
+    <!-- ==================================================
+         MENÚ
+    =================================================== -->
+
+    <section>
+
+
+        <div class="menu-section-title">
+
+            <h2>
+                🍽️ Menú
+            </h2>
+
+            <span
+                class="menu-count"
+                id="menuCount"
+            >
+                0 productos
+            </span>
+
+        </div>
+
+
+        <div
+            class="products"
+            id="products"
+        ></div>
+
+
+    </section>
+
+
+</main>
+
+<footer class="support-footer">
+    <div class="support-footer-content">
+        <div>
+            <strong>¿Tienes alguna duda o quieres agregar una funcionalidad?</strong>
+            <span>Contáctame y te ayudo a mejorar tu sistema.</span>
+        </div>
+        <a class="support-whatsapp" href="https://wa.me/527491040729?text=Hola%2C%20tengo%20una%20duda%20o%20quiero%20agregar%20una%20funcionalidad." target="_blank" rel="noopener">
+            <span>💬</span> Soporte por WhatsApp
+        </a>
+    </div>
+</footer>
+
+<!-- ======================================================
+     BARRA INFERIOR
+======================================================= -->
+
+<div class="cart-bar">
+
+
+    <div class="cart-info">
+
+
+        <div class="cart-icon">
+            🧾
+        </div>
+
+
+        <div class="cart-text">
+
+
+            <div class="cart-count">
+
+                <span id="cartCount">
+                    0
+                </span>
+
+                productos
+
+            </div>
+
+
+            <div
+                class="cart-total"
+                id="cartTotal"
+            >
+                $0.00
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <button
+        class="view-cart"
+        id="openCart"
+    >
+        Ver comanda
+    </button>
+
+
+</div>
+
+
+<!-- ======================================================
+     MODAL COMANDA
+======================================================= -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+
+            <h2>
+                🧾 Comanda
+            </h2>
+
+
+            <button
+                class="close"
+                id="closeModal"
+                aria-label="Cerrar"
+            >
+                ✕
+            </button>
+
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="order"
+        ></div>
+
+
+        <div class="modal-footer">
+
+
+            <div class="total-row">
+
+
+                <span class="total-label">
+                    Total
+                </span>
+
+
+                <span
+                    class="total-value"
+                    id="modalTotal"
+                >
+                    $0.00
+                </span>
+
+
+            </div>
+
+
+            <button
+                class="whatsapp"
+                id="sendWhatsApp"
+                disabled
+            >
+                📲 Enviar pedido por WhatsApp
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ALERTA -->
+
+<div
+    class="alert"
+    id="alert"
+></div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURACIÓN DEL NEGOCIO
+========================================================= */
+
+const business = {
+
+    name:
+        "Sabor Express",
+
+    slogan:
+        "Sabor sin rodeos",
+
+    /*
+       NÚMERO CONFIGURADO
+
+       México +52
+       Número: 7491040729
+
+       WhatsApp necesita:
+       52 + número
+
+       Sin +
+       Sin espacios
+       Sin guiones
+    */
+
+    whatsapp:
+        "527491040729",
+
+
+    /* REDES SOCIALES */
+
+    facebook:
+        "https://www.facebook.com/",
+
+    instagram:
+        "https://www.instagram.com/",
+
+    tiktok:
+        "https://www.tiktok.com/",
+
+
+    /* PÁGINA WEB */
+
+    website:
+        "https://tusitio.com",
+
+
+    /* GOOGLE MAPS */
+
+    maps:
+        "https://maps.google.com/"
+
+};
+
+
+/* =========================================================
+   PRODUCTOS
+=========================================================
+
+   IMPORTANTE:
+
+   NO HAY CATEGORÍAS.
+
+   NO HAY IMÁGENES.
+
+   SOLO:
+   - Nombre
+   - Descripción
+   - Precio
+
+========================================================= */
+
+const products = [
+
+    {
+        id:1,
+
+        name:
+            "Tacos al Pastor",
+
+        description:
+            "Carne al pastor, cebolla, cilantro y piña.",
+
+        price:
+            18
+
+    },
+
+
+    {
+        id:2,
+
+        name:
+            "Tacos de Suadero",
+
+        description:
+            "Suadero, cebolla y cilantro.",
+
+        price:
+            20
+
+    },
+
+
+    {
+        id:3,
+
+        name:
+            "Tacos de Bistec",
+
+        description:
+            "Bistec asado, cebolla y cilantro.",
+
+        price:
+            22
+
+    },
+
+
+    {
+        id:4,
+
+        name:
+            "Quesadilla",
+
+        description:
+            "Tortilla de maíz con queso.",
+
+        price:
+            45
+
+    },
+
+
+    {
+        id:5,
+
+        name:
+            "Hamburguesa Clásica",
+
+        description:
+            "Carne, queso, lechuga, tomate y aderezo.",
+
+        price:
+            95
+
+    },
+
+
+    {
+        id:6,
+
+        name:
+            "Hamburguesa BBQ",
+
+        description:
+            "Carne, queso, tocino y salsa BBQ.",
+
+        price:
+            125
+
+    },
+
+
+    {
+        id:7,
+
+        name:
+            "Papas Fritas",
+
+        description:
+            "Papas crujientes con sal.",
+
+        price:
+            55
+
+    },
+
+
+    {
+        id:8,
+
+        name:
+            "Nachos",
+
+        description:
+            "Totopos con queso, jalapeño y crema.",
+
+        price:
+            70
+
+    },
+
+
+    {
+        id:9,
+
+        name:
+            "Refresco",
+
+        description:
+            "Refresco de 600 ml.",
+
+        price:
+            30
+
+    },
+
+
+    {
+        id:10,
+
+        name:
+            "Agua de Horchata",
+
+        description:
+            "Agua fresca de horchata.",
+
+        price:
+            35
+
+    }
+
+];
+
+
+/* =========================================================
+   ESTADO TEMPORAL
+
+   NO LOCALSTORAGE
+   NO SESSIONSTORAGE
+   NO COOKIES
+   NO BASE DE DATOS
+
+   TODO EXISTE SOLO EN MEMORIA.
+
+   RECARGAR = BORRAR TODO.
+========================================================= */
+
+let order = [];
+
+let selectedTable = null;
+let isTakeaway = false;
+const TAKEAWAY_FEE = 5;
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const productsContainer =
+    document.getElementById(
+        "products"
+    );
+
+const searchInput =
+    document.getElementById(
+        "search"
+    );
+
+const clearSearch =
+    document.getElementById(
+        "clearSearch"
+    );
+
+const searchResults = document.getElementById("searchResults");
+
+const orderContainer =
+    document.getElementById(
+        "order"
+    );
+
+const modal =
+    document.getElementById(
+        "modal"
+    );
+
+const businessMenu =
+    document.getElementById(
+        "businessMenu"
+    );
+
+const takeawayInput = document.getElementById("takeaway");
+const takeawayLabel = document.getElementById("takeawayLabel");
+
+
+takeawayInput.addEventListener("change", function(){
+    isTakeaway = this.checked;
+    takeawayLabel.textContent = isTakeaway ? "Sí" : "No";
+
+    document.querySelectorAll(".table").forEach(table => {
+        table.classList.remove("selected");
+    });
+
+    if(isTakeaway){
+        selectedTable = "Para llevar";
+        showAlert("Pedido para llevar seleccionado");
+    }else{
+        selectedTable = null;
+        showAlert("Selecciona una mesa");
+    }
+
+    updateCart();
+});
+
+
+/* =========================================================
+   DATOS DEL NEGOCIO
+========================================================= */
+
+document.getElementById(
+    "businessName"
+).textContent =
+    business.name;
+
+
+document.getElementById(
+    "businessSlogan"
+).textContent =
+    business.slogan;
+
+
+/* =========================================================
+   REDES Y ENLACES
+========================================================= */
+
+document.getElementById(
+    "facebookLink"
+).href =
+    business.facebook;
+
+
+document.getElementById(
+    "instagramLink"
+).href =
+    business.instagram;
+
+
+document.getElementById(
+    "tiktokLink"
+).href =
+    business.tiktok;
+
+
+document.getElementById(
+    "websiteLink"
+).href =
+    business.website;
+
+
+document.getElementById(
+    "mapsLink"
+).href =
+    business.maps;
+
+
+/* =========================================================
+   MENU DESPLEGABLE
+========================================================= */
+
+document.getElementById(
+    "menuButton"
+).addEventListener(
+    "click",
+    function(){
+
+        businessMenu.classList.toggle(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BUSCADOR EN TIEMPO REAL
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        const value =
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        /*
+           Mostrar / ocultar X
+        */
+
+        if(value){
+
+            clearSearch.classList.add(
+                "show"
+            );
+
+        }else{
+
+            clearSearch.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        /*
+           ACTUALIZAR PRODUCTOS Y MOSTRAR
+           COINCIDENCIAS JUSTO DEBAJO DEL BUSCADOR
+        */
+
+        renderProducts();
+        renderSearchResults(value);
+
+    }
+);
+
+
+/* =========================================================
+   LIMPIAR BUSCADOR
+========================================================= */
+
+clearSearch.addEventListener(
+    "click",
+    function(){
+
+        searchInput.value = "";
+
+        clearSearch.classList.remove(
+            "show"
+        );
+
+        renderProducts();
+        renderSearchResults("");
+
+        searchInput.focus();
+
+    }
+);
+
+
+/* =========================================================
+   RENDER PRODUCTOS
+========================================================= */
+
+function renderSearchResults(value){
+    const query = value.toLowerCase().trim();
+
+    if(!query){
+        searchResults.classList.remove("show");
+        searchResults.innerHTML = "";
+        return;
+    }
+
+    // Las coincidencias se buscan principalmente por el nombre.
+    const matches = products
+        .filter(product =>
+            product.name.toLowerCase().includes(query)
+        )
+        .slice(0, 8);
+
+    searchResults.innerHTML = matches.length
+        ? matches.map(product => `
+            <div class="search-result">
+                <div class="search-result-main">
+                    <div class="search-result-name">
+                        ${escapeHTML(product.name)}
+                    </div>
+
+                    <div class="search-result-description">
+                        ${escapeHTML(product.description || "")}
+                    </div>
+                </div>
+
+                <div class="search-result-actions">
+                    <div class="search-result-price">
+                        $${product.price.toFixed(2)}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="search-add"
+                        onclick="addProduct(${product.id})"
+                    >
+                        + Agregar
+                    </button>
+                </div>
+            </div>
+        `).join("")
+        : '<div class="search-empty">No encontramos coincidencias en el nombre.</div>';
+
+    searchResults.classList.add("show");
+}
+
+function renderProducts(){
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    /*
+       FILTRAR EN TIEMPO REAL
+
+       Busca coincidencias en:
+
+       - Nombre
+       - Descripción
+    */
+
+    const filteredProducts =
+        products.filter(
+            product => {
+
+                const name =
+                    product.name
+                        .toLowerCase();
+
+                const description =
+                    product.description
+                        .toLowerCase();
+
+
+                return (
+                    name.includes(search) ||
+                    description.includes(search)
+                );
+
+            }
+        );
+
+
+    productsContainer.innerHTML = "";
+
+
+    document.getElementById(
+        "menuCount"
+    ).textContent =
+        `${filteredProducts.length} ${
+            filteredProducts.length === 1
+                ? "producto"
+                : "productos"
+        }`;
+
+
+    /*
+       SIN RESULTADOS
+    */
+
+    if(filteredProducts.length === 0){
+
+        productsContainer.innerHTML = `
+
+            <div class="no-results">
+
+                <div class="no-results-icon">
+                    🔎
+                </div>
+
+                <p>
+                    No encontramos ningún platillo.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       MOSTRAR COINCIDENCIAS
+    */
+
+    filteredProducts.forEach(
+        product => {
+
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "product";
+
+
+            element.innerHTML = `
+
+                <div class="product-info">
+
+                    <div class="product-name">
+
+                        ${escapeHTML(
+                            product.name
+                        )}
+
+                    </div>
+
+
+                    <div class="product-description">
+
+                        ${escapeHTML(
+                            product.description
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-right">
+
+                    <div class="product-price">
+
+                        $${product.price.toFixed(2)}
+
+                    </div>
+
+
+                    <button
+                        class="add"
+                        onclick="addProduct(${product.id})"
+                    >
+                        + Agregar
+                    </button>
+
+                </div>
+
+            `;
+
+
+            productsContainer.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   AGREGAR PRODUCTO
+========================================================= */
+
+function addProduct(id){
+
+    const product =
+        products.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!product){
+
+        return;
+
+    }
+
+
+    const existing =
+        order.find(
+            item =>
+                item.id === id
+        );
+
+
+    /*
+       SI YA EXISTE:
+       AUMENTAR CANTIDAD
+    */
+
+    if(existing){
+
+        existing.quantity++;
+
+    }
+
+
+    /*
+       SI NO EXISTE:
+       CREAR PRODUCTO
+    */
+
+    else{
+
+        order.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name,
+
+            price:
+                product.price,
+
+            quantity:
+                1,
+
+            note:
+                ""
+
+        });
+
+    }
+
+
+    updateCart();
+
+
+    showAlert(
+        `${product.name} agregado`
+    );
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR CARRITO
+========================================================= */
+
+function updateCart(){
+
+    const quantity =
+        order.reduce(
+            (total,item) =>
+                total +
+                item.quantity,
+            0
+        );
+
+
+    const productsAmount =
+        order.reduce(
+            (total,item) =>
+                total +
+                (
+                    item.price *
+                    item.quantity
+                ),
+            0
+        );
+
+    const amount =
+        productsAmount +
+        (isTakeaway && order.length > 0 ? TAKEAWAY_FEE : 0);
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent =
+        quantity;
+
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent =
+        `$${amount.toFixed(2)}`;
+
+
+    document.getElementById(
+        "modalTotal"
+    ).textContent =
+        `$${amount.toFixed(2)}`;
+
+
+    document.getElementById(
+        "sendWhatsApp"
+    ).disabled =
+        order.length === 0;
+
+
+    renderOrder();
+
+}
+
+
+/* =========================================================
+   RENDER COMANDA
+========================================================= */
+
+function renderOrder(){
+
+    if(order.length === 0){
+
+        orderContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div>
+                    🧾
+                </div>
+
+                <p>
+                    No hay productos en la comanda.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    orderContainer.innerHTML = "";
+
+
+    order.forEach(
+        (item,index) => {
+
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "order-item";
+
+
+            element.innerHTML = `
+
+                <div class="order-top">
+
+
+                    <div class="order-name">
+
+                        ${escapeHTML(
+                            item.name
+                        )}
+
+                    </div>
+
+
+                    <div class="order-subtotal">
+
+                        $${subtotal.toFixed(2)}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="order-controls">
+
+
+                    <div class="quantity">
+
+
+                        <button
+                            class="qty"
+                            onclick="changeQuantity(${index},-1)"
+                        >
+                            −
+                        </button>
+
+
+                        <span>
+
+                            ${item.quantity}
+
+                        </span>
+
+
+                        <button
+                            class="qty"
+                            onclick="changeQuantity(${index},1)"
+                        >
+                            +
+                        </button>
+
+
+                    </div>
+
+
+                    <button
+                        class="remove"
+                        onclick="removeProduct(${index})"
+                    >
+                        Eliminar
+                    </button>
+
+
+                </div>
+
+
+                <input
+                    class="note"
+                    type="text"
+                    placeholder="Nota para este producto..."
+                    value="${escapeAttribute(
+                        item.note
+                    )}"
+                    oninput="changeNote(${index},this.value)"
+                >
+
+            `;
+
+
+            orderContainer.appendChild(
+                element
+            );
+
+        }
+    );
+
+    if(isTakeaway){
+        const feeElement = document.createElement("div");
+        feeElement.className = "order-fee";
+        feeElement.innerHTML = `
+            <span>🛍️ Envase para llevar</span>
+            <strong>+$${TAKEAWAY_FEE.toFixed(2)}</strong>
+        `;
+        orderContainer.appendChild(feeElement);
+    }
+
+}
+
+
+/* =========================================================
+   CAMBIAR CANTIDAD
+========================================================= */
+
+function changeQuantity(
+    index,
+    change
+){
+
+    if(!order[index]){
+
+        return;
+
+    }
+
+
+    order[index].quantity +=
+        change;
+
+
+    if(
+        order[index].quantity <= 0
+    ){
+
+        order.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    updateCart();
+
+}
+
+
+/* =========================================================
+   NOTA INDIVIDUAL
+========================================================= */
+
+function changeNote(
+    index,
+    value
+){
+
+    if(order[index]){
+
+        order[index].note =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   ELIMINAR PRODUCTO
+========================================================= */
+
+function removeProduct(index){
+
+    order.splice(
+        index,
+        1
+    );
+
+    updateCart();
+
+}
+
+
+/* =========================================================
+   MESAS
+========================================================= */
+
+function renderTables(){
+
+    const container =
+        document.getElementById(
+            "tables"
+        );
+
+
+    /*
+       16 MESAS
+    */
+
+    for(
+        let i = 1;
+        i <= 16;
+        i++
+    ){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "table";
+
+
+        button.type =
+            "button";
+
+
+        button.innerHTML = `
+
+            <div class="table-icon">
+                🪑
+            </div>
+
+            <div class="table-number">
+
+                Mesa ${i}
+
+            </div>
+
+        `;
+
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(
+                        ".table"
+                    )
+                    .forEach(
+                        table =>
+                            table.classList
+                                .remove(
+                                    "selected"
+                                )
+                    );
+
+
+                this.classList.add(
+                    "selected"
+                );
+
+
+                selectedTable =
+                    i;
+
+                isTakeaway = false;
+                takeawayInput.checked = false;
+                takeawayLabel.textContent = "No";
+
+
+                showAlert(
+                    `Mesa ${i} seleccionada`
+                );
+
+            }
+        );
+
+
+        container.appendChild(
+            button
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ABRIR COMANDA
+========================================================= */
+
+document.getElementById(
+    "openCart"
+).addEventListener(
+    "click",
+    function(){
+
+        modal.classList.add(
+            "show"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+);
+
+
+/* =========================================================
+   CERRAR COMANDA
+========================================================= */
+
+document.getElementById(
+    "closeModal"
+).addEventListener(
+    "click",
+    closeModal
+);
+
+
+modal.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === modal
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+function closeModal(){
+
+    modal.classList.remove(
+        "show"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   ENVIAR A WHATSAPP
+========================================================= */
+
+document.getElementById(
+    "sendWhatsApp"
+).addEventListener(
+    "click",
+    sendWhatsApp
+);
+
+
+function sendWhatsApp(){
+
+    const customer =
+        document.getElementById(
+            "customer"
+        ).value.trim();
+
+
+    const generalNote =
+        document.getElementById(
+            "generalNote"
+        ).value.trim();
+
+
+    /*
+       VALIDAR CLIENTE
+    */
+
+    if(!customer){
+
+        showAlert(
+            "Escribe el nombre del cliente"
+        );
+
+        document.getElementById(
+            "customer"
+        ).focus();
+
+        return;
+
+    }
+
+
+    /*
+       VALIDAR MESA
+    */
+
+    if(!selectedTable){
+
+        showAlert(
+            "Selecciona una mesa o elige Para llevar"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       VALIDAR PRODUCTOS
+    */
+
+    if(order.length === 0){
+
+        showAlert(
+            "Agrega productos a la comanda"
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       CREAR MENSAJE
+    ===================================================== */
+
+    let message = "";
+
+
+    message +=
+        `*${business.name}*\n`;
+
+    message +=
+        `${business.slogan}\n`;
+
+    message +=
+        `━━━━━━━━━━━━━━━━━━\n`;
+
+    message +=
+        `🧾 *NUEVA COMANDA*\n\n`;
+
+
+    message +=
+        `👤 *Cliente:* ${customer}\n`;
+
+    message +=
+        `🪑 *Mesa:* ${selectedTable}\n\n`;
+
+
+    message +=
+        `🍽️ *PEDIDO*\n\n`;
+
+
+    /*
+       PRODUCTOS
+    */
+
+    order.forEach(
+        (item,index) => {
+
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+
+            message +=
+                `*${index + 1}. ${item.name}*\n`;
+
+
+            message +=
+                `Cantidad: ${item.quantity}\n`;
+
+
+            message +=
+                `Precio: $${item.price.toFixed(2)}\n`;
+
+
+            message +=
+                `Subtotal: $${subtotal.toFixed(2)}\n`;
+
+
+            /*
+               NOTA INDIVIDUAL
+            */
+
+            if(item.note){
+
+                message +=
+                    `📝 Nota: ${item.note}\n`;
+
+            }
+
+
+            message +=
+                `\n`;
+
+        }
+    );
+
+
+    /* =====================================================
+       TOTAL
+    ===================================================== */
+
+    const productsTotal =
+        order.reduce(
+            (sum,item) =>
+                sum +
+                (
+                    item.price *
+                    item.quantity
+                ),
+            0
+        );
+
+    const total =
+        productsTotal +
+        (isTakeaway ? TAKEAWAY_FEE : 0);
+
+
+    message +=
+        `━━━━━━━━━━━━━━━━━━\n`;
+
+    message +=
+        `💰 *TOTAL: $${total.toFixed(2)}*\n`;
+
+
+    /*
+       NOTA GENERAL
+    */
+
+    if(generalNote){
+
+        message +=
+            `\n📝 *NOTA GENERAL*\n`;
+
+        message +=
+            `${generalNote}\n`;
+
+    }
+
+
+    message +=
+        `\n━━━━━━━━━━━━━━━━━━`;
+
+
+    /* =====================================================
+       WHATSAPP
+    ===================================================== */
+
+    const whatsappURL =
+        `https://wa.me/${business.whatsapp}?text=` +
+        encodeURIComponent(
+            message
+        );
+
+
+    /*
+       ABRIR WHATSAPP
+    */
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   ALERTAS
+========================================================= */
+
+let alertTimeout;
+
+
+function showAlert(message){
+
+    const alert =
+        document.getElementById(
+            "alert"
+        );
+
+
+    alert.textContent =
+        message;
+
+
+    alert.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        alertTimeout
+    );
+
+
+    alertTimeout =
+        setTimeout(
+            function(){
+
+                alert.classList.remove(
+                    "show"
+                );
+
+            },
+            1800
+        );
+
+}
+
+
+/* =========================================================
+   SEGURIDAD
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttribute(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        );
+
+}
+
+
+/* =========================================================
+   INICIAR SISTEMA
+========================================================= */
+
+renderProducts();
+
+renderTables();
+
+updateCart();
+
+</script>
+
+</body>
+</html>
