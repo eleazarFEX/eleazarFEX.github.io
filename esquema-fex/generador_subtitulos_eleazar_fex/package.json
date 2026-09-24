@@ -1,0 +1,26 @@
+{
+  "name": "generador-subtitulos",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Subtitulos automaticos en espanol (Whisper + FFmpeg.wasm) con exportacion a MP4 con subtitulos incrustados.",
+  "scripts": {
+    "setup:ffmpeg": "node scripts/copy-ffmpeg-assets.mjs",
+    "postinstall": "node scripts/copy-ffmpeg-assets.mjs",
+    "dev": "npm run setup:ffmpeg && vite",
+    "build": "npm run setup:ffmpeg && vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1",
+    "@huggingface/transformers": "^3.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}
