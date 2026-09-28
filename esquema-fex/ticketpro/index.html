@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="TicketPro - Generador profesional de tickets"
+    >
+
+    <meta
+        name="theme-color"
+        content="#4f46e5"
+    >
+
+    <title>TicketPro - Generador de Tickets</title>
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="assets/css/styles.css"
+    >
+
+    <!-- HTML2CANVAS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        defer>
+    </script>
+
+    <!-- jsPDF -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"
+        defer>
+    </script>
+
+    <!-- JavaScript principal -->
+    <script
+        src="assets/js/app.js"
+        defer>
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                🧾
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    TicketPro
+                </strong>
+
+                <span>
+                    Generador de tickets
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <button
+                type="button"
+                class="nav-item active"
+                data-section="inicio"
+            >
+                <span class="nav-icon">⌂</span>
+
+                <span>
+                    Inicio
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-section="negocio"
+            >
+                <span class="nav-icon">▣</span>
+
+                <span>
+                    Mi negocio
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-section="venta"
+            >
+                <span class="nav-icon">＋</span>
+
+                <span>
+                    Nueva venta
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-section="historial"
+            >
+                <span class="nav-icon">☷</span>
+
+                <span>
+                    Historial
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-section="configuracion"
+            >
+                <span class="nav-icon">⚙</span>
+
+                <span>
+                    Configuración
+                </span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <span>
+                TicketPro
+            </span>
+
+            <small>
+                Funcionamiento local
+            </small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 id="page-title">
+                    Inicio
+                </h1>
+
+                <p id="page-description">
+                    Genera tickets profesionales fácilmente.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="top-new-sale"
+            >
+                + Nueva venta
+            </button>
+
+        </header>
+
+
+        <!-- =================================================
+             INICIO
+        ================================================== -->
+
+        <section
+            class="section active"
+            id="section-inicio"
+        >
+
+            <div class="hero">
+
+                <div class="hero-icon">
+                    🧾
+                </div>
+
+
+                <div class="hero-content">
+
+                    <span class="eyebrow">
+                        GENERADOR TEMPORAL
+                    </span>
+
+                    <h2>
+                        Crea tickets profesionales
+                    </h2>
+
+                    <p>
+                        Genera tickets de venta en segundos,
+                        sin base de datos y directamente desde
+                        tu navegador.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="start-button"
+                    >
+                        Comenzar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🏢
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Negocio
+                        </span>
+
+                        <strong id="stat-business">
+                            Sin configurar
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🧾
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Próximo ticket
+                        </span>
+
+                        <strong id="stat-ticket">
+                            #000001
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        💾
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Datos
+                        </span>
+
+                        <strong>
+                            Locales
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NEGOCIO
+        ================================================== -->
+
+        <section
+            class="section"
+            id="section-negocio"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Datos del negocio
+                    </h2>
+
+                    <p>
+                        La información opcional solamente
+                        aparecerá en el ticket cuando sea
+                        proporcionada.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <form id="business-form">
+
+                    <div class="form-grid">
+
+
+                        <!-- NOMBRE -->
+
+                        <div class="field field-full">
+
+                            <label for="business-name">
+                                Nombre del negocio *
+                            </label>
+
+                            <input
+                                id="business-name"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Ej. Belleza Natural"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- TELÉFONO -->
+
+                        <div class="field">
+
+                            <label for="business-phone">
+                                Teléfono
+                            </label>
+
+                            <input
+                                id="business-phone"
+                                type="tel"
+                                maxlength="30"
+                                placeholder="771 123 4567"
+                            >
+
+                        </div>
+
+
+                        <!-- WHATSAPP -->
+
+                        <div class="field">
+
+                            <label for="business-whatsapp">
+                                WhatsApp
+                            </label>
+
+                            <input
+                                id="business-whatsapp"
+                                type="tel"
+                                maxlength="30"
+                                placeholder="771 123 4567"
+                            >
+
+                        </div>
+
+
+                        <!-- CORREO -->
+
+                        <div class="field">
+
+                            <label for="business-email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                id="business-email"
+                                type="email"
+                                maxlength="100"
+                                placeholder="correo@ejemplo.com"
+                            >
+
+                        </div>
+
+
+                        <!-- WEB -->
+
+                        <div class="field">
+
+                            <label for="business-web">
+                                Página web
+                            </label>
+
+                            <input
+                                id="business-web"
+                                type="text"
+                                maxlength="150"
+                                placeholder="www.ejemplo.com"
+                            >
+
+                        </div>
+
+
+                        <!-- RFC -->
+
+                        <div class="field">
+
+                            <label for="business-rfc">
+                                RFC
+                            </label>
+
+                            <input
+                                id="business-rfc"
+                                type="text"
+                                maxlength="30"
+                                placeholder="RFC"
+                            >
+
+                        </div>
+
+
+                        <!-- CIUDAD -->
+
+                        <div class="field">
+
+                            <label for="business-location">
+                                Ciudad / Estado
+                            </label>
+
+                            <input
+                                id="business-location"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Pachuca, Hidalgo"
+                            >
+
+                        </div>
+
+
+                        <!-- DIRECCIÓN -->
+
+                        <div class="field field-full">
+
+                            <label for="business-address">
+                                Dirección
+                            </label>
+
+                            <input
+                                id="business-address"
+                                type="text"
+                                maxlength="200"
+                                placeholder="Dirección del negocio"
+                            >
+
+                        </div>
+
+
+                        <!-- LOGO -->
+
+                        <div class="field field-full">
+
+                            <label for="business-logo">
+                                Logotipo
+                            </label>
+
+                            <div class="logo-upload">
+
+
+                                <div
+                                    class="logo-preview"
+                                    id="logo-preview"
+                                >
+                                </div>
+
+
+                                <div class="logo-controls">
+
+                                    <input
+                                        id="business-logo"
+                                        type="file"
+                                        accept="image/png,image/jpeg,image/webp"
+                                    >
+
+                                    <small>
+                                        PNG, JPG o WEBP.
+                                        Se comprime automáticamente
+                                        para guardarlo localmente.
+                                    </small>
+
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger btn-small hidden"
+                                        id="remove-logo"
+                                    >
+                                        Eliminar logotipo
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-footer">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Guardar datos del negocio
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NUEVA VENTA
+        ================================================== -->
+
+        <section
+            class="section"
+            id="section-venta"
+        >
+
+            <div class="section-heading sale-heading">
+
+                <div>
+
+                    <h2>
+                        Nueva venta
+                    </h2>
+
+                    <p>
+                        Agrega los productos y revisa
+                        el ticket en tiempo real.
+                    </p>
+
+                </div>
+
+
+                <div class="ticket-badge">
+
+                    Ticket
+
+                    <strong id="current-ticket">
+                        #000001
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="sale-layout">
+
+
+                <!-- =================================================
+                     FORMULARIO DE VENTA
+                ================================================== -->
+
+                <div class="sale-form">
+
+
+                    <!-- INFORMACIÓN DE VENTA -->
+
+                    <div class="card">
+
+                        <div class="card-title">
+
+                            <div>
+
+                                <h3>
+                                    Información de la venta
+                                </h3>
+
+                                <p>
+                                    El número de ticket se asigna solo (puedes cambiarlo). Los demás datos son opcionales.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- NÚMERO DE TICKET -->
+
+                            <div class="field">
+
+                                <label for="ticket-number">
+                                    Número de ticket
+                                </label>
+
+                                <input
+                                    id="ticket-number"
+                                    type="text"
+                                    inputmode="numeric"
+                                    maxlength="9"
+                                    autocomplete="off"
+                                    placeholder="1"
+                                >
+
+                                <small class="field-hint">
+                                    Se asigna automáticamente. Puedes modificarlo.
+                                </small>
+
+                            </div>
+
+
+                            <!-- CLIENTE -->
+
+                            <div class="field">
+
+                                <label for="customer-name">
+                                    Cliente
+                                </label>
+
+                                <input
+                                    id="customer-name"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="Nombre del cliente"
+                                >
+
+                            </div>
+
+
+                            <!-- TELÉFONO CLIENTE -->
+
+                            <div class="field">
+
+                                <label for="customer-phone">
+                                    Teléfono del cliente
+                                </label>
+
+                                <input
+                                    id="customer-phone"
+                                    type="tel"
+                                    maxlength="30"
+                                    placeholder="Teléfono"
+                                >
+
+                            </div>
+
+
+                            <!-- PAGO -->
+
+                            <div class="field">
+
+                                <label for="payment-method">
+                                    Método de pago
+                                </label>
+
+                                <select id="payment-method">
+
+                                    <option value="">
+                                        No especificado
+                                    </option>
+
+                                    <option value="Efectivo">
+                                        Efectivo
+                                    </option>
+
+                                    <option value="Tarjeta">
+                                        Tarjeta
+                                    </option>
+
+                                    <option value="Transferencia">
+                                        Transferencia
+                                    </option>
+
+                                    <option value="Mercado Pago">
+                                        Mercado Pago
+                                    </option>
+
+                                    <option value="Otro">
+                                        Otro
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- ENLACE QR -->
+
+                            <div class="field field-full">
+
+                                <label for="qr-link">
+                                    Enlace para código QR
+                                </label>
+
+                                <input
+                                    id="qr-link"
+                                    type="text"
+                                    maxlength="300"
+                                    autocomplete="off"
+                                    placeholder="Página web, red social, WhatsApp... (ej. instagram.com/minegocio)"
+                                >
+
+                                <small class="field-hint" id="qr-hint">
+                                    Opcional. Si lo llenas, el ticket mostrará al final un código QR con este enlace.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PRODUCTOS
+                    ================================================== -->
+
+                    <div class="card">
+
+                        <div class="card-title product-title">
+
+                            <div>
+
+                                <h3>
+                                    Productos
+                                </h3>
+
+                                <p>
+                                    Agrega todos los productos de la venta.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                id="add-product"
+                            >
+                                + Agregar producto
+                            </button>
+
+                        </div>
+
+
+                        <div id="products-container">
+
+                            <div class="empty-products">
+
+                                <div>
+                                    🛒
+                                </div>
+
+                                <strong>
+                                    No hay productos
+                                </strong>
+
+                                <span>
+                                    Agrega el primer producto para comenzar.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TOTALES
+                    ================================================== -->
+
+                    <div class="card">
+
+                        <div class="card-title">
+
+                            <div>
+
+                                <h3>
+                                    Totales
+                                </h3>
+
+                                <p>
+                                    Configuración de la venta.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="totals-options">
+
+
+                            <label class="check-option">
+
+                                <input
+                                    type="checkbox"
+                                    id="enable-tax"
+                                    checked
+                                >
+
+                                <span>
+                                    Aplicar IVA
+                                </span>
+
+                            </label>
+
+
+                            <div class="small-field">
+
+                                <label for="sale-tax">
+                                    IVA %
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="sale-tax"
+                                    min="0"
+                                    max="100"
+                                    step="0.01"
+                                    value="16"
+                                >
+
+                            </div>
+
+
+                            <div class="small-field">
+
+                                <label for="general-discount">
+                                    Descuento general
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="general-discount"
+                                    min="0"
+                                    step="0.01"
+                                    value="0"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         NOTA
+                    ================================================== -->
+
+                    <div class="card">
+
+                        <div class="card-title">
+
+                            <div>
+
+                                <h3>
+                                    Nota del ticket
+                                </h3>
+
+                                <p>
+                                    Aparecerá al final del ticket.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <textarea
+                            id="ticket-note"
+                            rows="4"
+                            maxlength="300"
+                            placeholder="Ej. Gracias por su compra. No se aceptan devoluciones sin ticket."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACCIONES
+                    ================================================== -->
+
+                    <div class="sale-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="clear-sale"
+                        >
+                            Nueva / Limpiar
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="save-sale"
+                        >
+                            Guardar venta
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PREVIEW
+                ================================================== -->
+
+                <div class="preview-area">
+
+                    <div class="preview-header">
+
+                        <div>
+
+                            <strong>
+                                Vista previa
+                            </strong>
+
+                            <span>
+                                Solo el ticket será descargado.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ticket-wrapper">
+
+                        <div
+                            id="ticket"
+                            class="ticket"
+                        >
+
+                            <!--
+                                JavaScript genera
+                                automáticamente el ticket aquí.
+                            -->
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DESCARGAS
+                    ================================================== -->
+
+                    <div class="download-actions">
+
+
+                        <!-- PNG -->
+
+                        <button
+                            type="button"
+                            class="download-btn image"
+                            id="download-png"
+                        >
+
+                            <span>
+                                🖼️
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Descargar PNG
+                                </strong>
+
+                                <small>
+                                    Imagen del ticket
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <!-- PDF -->
+
+                        <button
+                            type="button"
+                            class="download-btn pdf"
+                            id="download-pdf"
+                        >
+
+                            <span>
+                                📄
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Descargar PDF
+                                </strong>
+
+                                <small>
+                                    Documento PDF
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <!-- IMPRIMIR -->
+
+                        <button
+                            type="button"
+                            class="download-btn print"
+                            id="print-ticket"
+                        >
+
+                            <span>
+                                🖨️
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Imprimir
+                                </strong>
+
+                                <small>
+                                    Solo el ticket
+                                </small>
+
+                            </div>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTORIAL
+        ================================================== -->
+
+        <section
+            class="section"
+            id="section-historial"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Historial
+                    </h2>
+
+                    <p>
+                        Ventas guardadas localmente
+                        en este navegador.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="clear-history"
+                >
+                    Eliminar historial
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div
+                    id="history-container"
+                    class="history-container"
+                >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONFIGURACIÓN
+        ================================================== -->
+
+        <section
+            class="section"
+            id="section-configuracion"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Configuración
+                    </h2>
+
+                    <p>
+                        Personaliza la apariencia y moneda.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="form-grid">
+
+
+                    <!-- MONEDA -->
+
+                    <div class="field">
+
+                        <label for="currency">
+                            Moneda
+                        </label>
+
+                        <select id="currency">
+
+                            <option value="MXN">
+                                MXN - Peso mexicano
+                            </option>
+
+                            <option value="USD">
+                                USD - Dólar
+                            </option>
+
+                            <option value="EUR">
+                                EUR - Euro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TAMAÑO -->
+
+                    <div class="field">
+
+                        <label for="ticket-size">
+                            Tamaño del ticket
+                        </label>
+
+                        <select id="ticket-size">
+
+                            <option value="80">
+                                80 mm
+                            </option>
+
+                            <option value="58">
+                                58 mm
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+====================================================== -->
+
+<div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+>
+
+    <span id="toast-message"></span>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL HISTORIAL
+====================================================== -->
+
+<div
+    class="modal hidden"
+    id="history-modal"
+>
+
+    <div
+        class="modal-overlay"
+        data-close-modal
+    ></div>
+
+
+    <div class="modal-box">
+
+        <button
+            type="button"
+            class="modal-close"
+            data-close-modal
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
+
+
+        <div id="history-modal-content">
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
