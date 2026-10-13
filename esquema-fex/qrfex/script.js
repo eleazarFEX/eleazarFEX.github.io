@@ -8,9 +8,9 @@
    Pega la URL completa de cada perfil (con https://).
    Mientras estén vacías, los iconos se muestran atenuados. */
 const SOCIAL_LINKS = {
-  tiktok:   '',   // Ejemplo: 'https://www.tiktok.com/@tu_usuario'
-  facebook: '',   // Ejemplo: 'https://www.facebook.com/tu_pagina'
-  youtube:  ''    // Ejemplo: 'https://www.youtube.com/@tu_canal'
+  tiktok:   'https://www.tiktok.com/@eleazarfex',   // Ejemplo: 'https://www.tiktok.com/@tu_usuario'
+  facebook: 'https://www.youtube.com/@EleazarFEX',   // Ejemplo: 'https://www.facebook.com/tu_pagina'
+  youtube:  'https://www.facebook.com/eleazarfexoficial/'    // Ejemplo: 'https://www.youtube.com/@tu_canal'
 };
 
 /* ---------- Configuración de la API ---------- */
