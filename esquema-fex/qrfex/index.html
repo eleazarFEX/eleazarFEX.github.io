@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="QR Studio: genera y personaliza tus códigos QR.">
+  <title>QR Studio</title>
+
+  <!-- Tipografía: Inter (Google Fonts). Si no carga, se usa la fuente del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Iconos de la interfaz: Lucide (versión fija). Si no carga, la app sigue funcionando sin iconos. -->
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true"><i data-lucide="qr-code"></i></span>
+        <div>
+          <h1>QR Studio</h1>
+          <p>Genera y personaliza tus códigos QR</p>
+        </div>
+      </div>
+
+      <nav class="social" aria-label="Redes sociales">
+        <!-- Las URL se configuran en script.js (constante SOCIAL_LINKS) -->
+        <a data-social="tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+        <a data-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+        </a>
+        <a data-social="youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <!-- ============ FORMULARIO ============ -->
+      <section class="card" aria-labelledby="configTitle">
+        <h2 id="configTitle" class="sr-only">Configuración del código QR</h2>
+
+        <form id="qrForm" novalidate autocomplete="off">
+          <div class="group">
+            <label for="content" class="label">¿Qué quieres convertir en código QR?</label>
+            <div class="field">
+              <input id="content" name="content" type="text" placeholder="https://tusitio.com"
+                     autocapitalize="off" autocorrect="off" spellcheck="false"
+                     aria-describedby="contentHelp contentError">
+              <button type="button" id="clearBtn" class="icon-btn clear" aria-label="Borrar contenido" hidden>
+                <i data-lucide="x"></i>
+              </button>
+            </div>
+            <p id="contentHelp" class="hint">Pega un enlace o escribe cualquier texto.</p>
+            <p id="contentError" class="error" role="alert" hidden></p>
+          </div>
+
+          <fieldset class="group">
+            <legend class="label">Tamaño</legend>
+            <div class="segmented" id="sizeGroup">
+              <label><input type="radio" name="size" value="200"><span>200 px</span></label>
+              <label><input type="radio" name="size" value="300" checked><span>300 px</span></label>
+              <label><input type="radio" name="size" value="500"><span>500 px</span></label>
+              <label><input type="radio" name="size" value="800"><span>800 px</span></label>
+            </div>
+          </fieldset>
+
+          <div class="colors">
+            <fieldset class="group">
+              <legend class="label">Color del código</legend>
+              <div class="swatches" id="fgSwatches" role="group" aria-label="Colores predeterminados del código"></div>
+              <label class="custom-color">
+                <input type="color" id="fgColor" value="#000000" aria-label="Color personalizado del código">
+                <span>Personalizado</span>
+              </label>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend class="label">Color de fondo</legend>
+              <div class="swatches" id="bgSwatches" role="group" aria-label="Colores predeterminados del fondo"></div>
+              <label class="custom-color">
+                <input type="color" id="bgColor" value="#ffffff" aria-label="Color de fondo personalizado">
+                <span>Personalizado</span>
+              </label>
+            </fieldset>
+          </div>
+
+          <p id="contrastWarn" class="warn" role="status" hidden>
+            <i data-lucide="triangle-alert"></i>
+            <span>Contraste bajo: podría no leerse bien. Usa un código oscuro sobre un fondo claro.</span>
+          </p>
+
+          <fieldset class="group">
+            <legend class="label">Logotipo en el centro <span class="optional">(opcional)</span></legend>
+            <div class="logo-row">
+              <label class="btn btn-ghost" for="logoInput">
+                <i data-lucide="image-plus"></i><span>Subir imagen</span>
+              </label>
+              <input type="file" id="logoInput" class="sr-only" accept="image/*">
+              <div id="logoPreview" class="logo-preview" hidden>
+                <img id="logoThumb" alt="Vista previa del logotipo">
+                <button type="button" id="logoRemove" class="icon-btn" aria-label="Quitar logotipo">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+            </div>
+            <p class="hint">La API no incluye logotipos, así que la imagen se superpone en tu navegador y se usa corrección de errores alta (H) para mantener la lectura.</p>
+            <p id="logoError" class="error" role="alert" hidden></p>
+          </fieldset>
+
+          <button type="submit" id="generateBtn" class="btn btn-primary btn-lg">
+            <i data-lucide="sparkles"></i><span>Generar código QR</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ============ VISTA PREVIA ============ -->
+      <section class="card preview" aria-labelledby="previewTitle">
+        <div class="preview-head">
+          <h2 id="previewTitle">Vista previa de tu código QR</h2>
+          <span id="badge" class="badge" hidden><i data-lucide="circle-check"></i>QR generado</span>
+        </div>
+
+        <div id="emptyState" class="empty">
+          <i data-lucide="scan-line"></i>
+          <p>Tu código aparecerá aquí.</p>
+        </div>
+
+        <div id="result" hidden>
+          <div class="qr-stage">
+            <div id="qrFrame" class="qr-frame">
+              <canvas id="qrCanvas" role="img" aria-label="Código QR generado"></canvas>
+              <div id="loader" class="loader" hidden aria-hidden="true"><span class="spinner"></span></div>
+              <div id="renderError" class="render-error" hidden>
+                <p id="renderErrorText"></p>
+                <button type="button" id="retryBtn" class="btn btn-ghost"><i data-lucide="rotate-cw"></i><span>Reintentar</span></button>
+              </div>
+            </div>
+          </div>
+
+          <dl class="meta">
+            <div><dt>Contenido</dt><dd id="metaContent" class="truncate"></dd></div>
+            <div><dt>Tamaño</dt><dd id="metaSize"></dd></div>
+          </dl>
+
+          <div class="actions">
+            <button type="button" id="downloadBtn" class="btn btn-primary"><i data-lucide="download"></i><span>Descargar PNG</span></button>
+            <button type="button" id="openBtn" class="btn btn-ghost"><i data-lucide="external-link"></i><span>Abrir imagen</span></button>
+            <button type="button" id="copyBtn" class="btn btn-ghost"><i data-lucide="copy"></i><span>Copiar contenido</span></button>
+            <button type="button" id="anotherBtn" class="btn btn-ghost"><i data-lucide="plus"></i><span>Generar otro</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
